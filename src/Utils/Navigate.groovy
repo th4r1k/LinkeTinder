@@ -370,4 +370,26 @@ class Navigate {
             }
         }
     }
+
+
+    static enterpriseMatches(String name) {
+
+        for (int i = 0; i < Enterprises.list.size(); i++) {
+            if (Enterprises.list[i].name == name) {
+
+                for (int j = 0; j < Candidates.list.size(); j++) {
+                    for (int k = 0; k < Enterprises.list[i].opportunity.size(); k++) {
+                        if (Candidates.list[j].likes.contains(Enterprises.list[i].opportunity[k].id)) {
+
+                            println "***********************************************"
+                            println "Match com o candidato ${Candidates.list[j].name} na vaga ${Enterprises.list[i].opportunity[k].description}"
+                            println "***********************************************"
+
+                        }
+                    }
+                }
+                break
+            }
+        }
+    }
 }
