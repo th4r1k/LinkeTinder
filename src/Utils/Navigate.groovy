@@ -311,4 +311,26 @@ class Navigate {
             }
         }
     }
+
+
+    static matches(String name) {
+
+        for (int i = 0; i < Candidates.list.size(); i++) {
+            if (Candidates.list[i].name == name) {
+
+                for (int j = 0; j < Enterprises.list.size(); j++) {
+                    for (int k = 0; k < Enterprises.list[j].opportunity.size(); k++) {
+                        if (Candidates.list[i].likes.flatten().contains(Enterprises.list[j].opportunity[k].id)) {
+                            if (Enterprises.list[j].likes.contains(name)) {
+                                println "***********************************************"
+                                println "Match com a empresa ${Enterprises.list[j].name}"
+                                println "***********************************************"
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+    }
 }
