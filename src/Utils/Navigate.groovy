@@ -333,4 +333,41 @@ class Navigate {
 
         }
     }
+
+
+    static getCandidates(String name) {
+        Candidates.list.forEach {
+            if (it.qualification) {
+
+                println ""
+                println "Habilidades do candidato"
+                println it.qualification
+                enterpriseLike(name, it.name)
+
+
+            } else {
+                println "Nao ha mais candidatos"
+                enterpriseMenu(name)
+            }
+        }
+        enterpriseMenu(name)
+    }
+
+
+    static enterpriseLike(String name, def candidateName) {
+        Scanner input = new Scanner(System.in)
+
+        println "0 - Like"
+        println "1 - Proximo"
+        String cmd = input.nextLine()
+        if (cmd == "0") {
+
+            for (int i = 0; i < Enterprises.list.size(); i++) {
+                if (Enterprises.list[i].name == name) {
+                    Enterprises.list[i].likes += [candidateName]
+
+                }
+            }
+        }
+    }
 }
