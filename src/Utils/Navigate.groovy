@@ -26,16 +26,16 @@ class Navigate {
             case "0":
                 break
             case "1":
-//                newUser()
+                newUser()
                 break
             case "2":
-//                login()
+                login()
                 break
             case "3":
-//                getCandidates()
+                getCandidates()
                 break
             case "4":
-//                getEnterprises()
+                getEnterprises()
                 break
             default:
                 break
@@ -59,12 +59,12 @@ class Navigate {
             case "0":
                 start()
             case "1":
-//                createCandidate()
-//                newUser()
+                createCandidate()
+                newUser()
 
             case "2":
-//                createEnterprise()
-//                newUser()
+                createEnterprise()
+                newUser()
             default:
                 break
         }
@@ -86,12 +86,12 @@ class Navigate {
                 start()
                 break
             case "1":
-//                getOpportunities(name)
-//                candidateMenu(name)
+                getOpportunities(name)
+                candidateMenu(name)
                 break
             case "2":
-//                matches(name)
-//                candidateMenu(name)
+                matches(name)
+                candidateMenu(name)
                 break
             default:
                 break
@@ -115,12 +115,12 @@ class Navigate {
                 start()
                 break
             case "1":
-//                getCandidates(name)
-//                enterpriseMenu(name)
+                getCandidates(name)
+                enterpriseMenu(name)
                 break
             case "2":
-//                enterpriseMatches(name)
-//                enterpriseMenu(name)
+                enterpriseMatches(name)
+                enterpriseMenu(name)
                 break
             default:
                 break
@@ -390,6 +390,34 @@ class Navigate {
                 }
                 break
             }
+        }
+    }
+
+    static getCandidates() {
+        println ""
+        println "Lista de candidatos:"
+        Candidates.list.forEach { println it.name }
+        println("Digite 0 para voltar")
+        Scanner input = new Scanner(System.in);
+        def cmd = input.nextLine()
+
+
+        if (cmd) {
+            start()
+        }
+    }
+
+
+    static getEnterprises() {
+        println ""
+        println "Lista empresas:"
+        Enterprises.list.forEach { println it.name }
+        Scanner input = new Scanner(System.in);
+        println("Digite 0 para voltar")
+        def cmd = input.nextLine()
+
+        if (cmd) {
+            start()
         }
     }
 }

@@ -1,3 +1,8 @@
+import Utils.Navigate
+import Utils.Populate
+
 static void main(String[] args) {
-  println "Hello LinkeTinders"
+  Populate.candidates();
+  Populate.enterprises();
+  Navigate.start()
 }
