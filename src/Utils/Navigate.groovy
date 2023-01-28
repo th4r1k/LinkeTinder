@@ -246,4 +246,21 @@ class Navigate {
 
     }
 
+
+    static login() {
+
+        println ""
+        println "Lista de empresas:"
+        Enterprises.list.forEach { println it.name }
+
+        println "Lista de candidatos:"
+        Candidates.list.forEach { println it.name }
+
+        Scanner input = new Scanner(System.in);
+        println "Digite algum dos nomes acima para fazer login:"
+        String name = input.nextLine();
+        verify(name)
+
+    }
+
 }
