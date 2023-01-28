@@ -263,4 +263,52 @@ class Navigate {
 
     }
 
+
+    static verify(String name) {
+
+        List<Candidate> data = Candidates.list.findAll { it.name == name }
+        if (data) {
+            candidateMenu(name)
+        } else {
+            enterpriseMenu(name)
+        }
+    }
+
+
+    static getOpportunities(String name) {
+        def opportunities = Enterprises.list.forEach {
+            if (it.opportunity) {
+                if (it.opportunity.size() > 1) {
+                    it.opportunity.forEach {
+
+                        like(name, it.id)
+                    }
+                } else {
+                    println it.opportunity
+                    like(name, it.opportunity.id)
+                }
+            } else {
+                println "Nao ha mais vagas"
+                candidateMenu(name)
+            }
+        }
+        candidateMenu(name)
+    }
+
+
+    static like(String name, def op) {
+        Scanner input = new Scanner(System.in);
+        println "0 - Like"
+        println "1 - Proximo"
+        String cmd = input.nextLine();
+        if (cmd == "0") {
+
+            for (int i = 0; i < Candidates.list.size(); i++) {
+                if (Candidates.list[i].name == name) {
+                    Candidates.list[i].likes += op
+
+                }
+            }
+        }
+    }
 }
