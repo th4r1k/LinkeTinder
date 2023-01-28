@@ -1,7 +1,9 @@
 package Utils
 
 import Data.Candidates
+import Data.Enterprises
 import Entity.Candidate
+import Entity.Enterprise
 
 class Navigate {
 
@@ -191,4 +193,57 @@ class Navigate {
         start()
 
     }
+
+
+    static createEnterprise() {
+        Scanner input = new Scanner(System.in);
+
+        println "Digite o nome"
+        String name = input.nextLine();
+        while (name == "") {
+            println "Digite o nome"
+            name = input.nextLine();
+        }
+        println "Digite o CNPJ"
+        int doc = Integer.parseInt(input.nextLine());
+        while (doc == "") {
+            println "Digite o CNPJ"
+            doc = Integer.parseInt(input.nextLine());
+        }
+
+        println "Digite o email"
+        String email = input.nextLine();
+        while (email == "") {
+            println "Digite o email"
+            email = input.nextLine();
+        }
+
+        println "Digite o pais"
+        String country = input.nextLine();
+        while (country == "") {
+            println "Digite o pais"
+            country = input.nextLine();
+        }
+
+        println "Digite o estado"
+        String state = input.nextLine();
+        while (state == "") {
+            println "Digite o estado"
+            state = input.nextLine();
+        }
+
+        println "Digite o Cep"
+        int zipCode = Integer.parseInt(input.nextLine())
+        while (zipCode == "") {
+            println "Digite o Cep"
+            zipCode = Integer.parseInt(input.nextLine())
+        }
+
+        Enterprise novo = new Enterprise(name: name, email: email, country: country, zipCode: zipCode, state: state, doc: doc)
+        Enterprises.list += novo
+        println "Empresa cadastrada com sucesso"
+        start()
+
+    }
+
 }
