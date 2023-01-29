@@ -10,11 +10,11 @@ class Populate {
 
     static void candidates() {
 
-        Candidate c01 = new Candidate(name: "candidato01", email: "candidato01@gmail.com", doc: 123456, country: "Brasil", state: "PR", zipCode: 12312321, age: 33, qualification: ['Java', 'Groovy'])
-        Candidate c02 = new Candidate(name: "candidato02", email: "candidato02@gmail.com", doc: 123456, country: "Brasil", state: "SP", zipCode: 32132132, age: 26, qualification: ['Javascript', 'Angular'])
-        Candidate c03 = new Candidate(name: "candidato03", email: "candidato03@gmail.com", doc: 123456, country: "Brasil", state: "MT", zipCode: 54354313, age: 28, qualification: ['Java', 'Spring_Framework'])
-        Candidate c04 = new Candidate(name: "candidato04", email: "candidato04@gmail.com", doc: 123456, country: "Brasil", state: "RN", zipCode: 65732234, age: 29, qualification: ['Python'])
-        Candidate c05 = new Candidate(name: "candidato05", email: "candidato05@gmail.com", doc: 123456, country: "Brasil", state: "RN", zipCode: 65732234, age: 29, qualification: ['Angular'])
+        Candidate c01 = new Candidate("candidato01",  "candidato01@gmail.com",  "Brasil", "PR", 123456,  43242343, 33, ['Java', 'Groovy'])
+        Candidate c02 = new Candidate("candidato02",  "candidato02@gmail.com",  "Brasil", "MT", 654665,  3213132, 33, ['Phyton'])
+        Candidate c03 = new Candidate("candidato03",  "candidato03@gmail.com",  "Brasil", "RR", 212121,  12312321, 33, ['Javascript', 'Groovy'])
+        Candidate c04 = new Candidate("candidato04",  "candidato04@gmail.com",  "Brasil", "RJ", 432133,  12312321, 33, ['Spring_Framework', 'Java'])
+        Candidate c05 = new Candidate("candidato05",  "candidato05@gmail.com",  "Brasil", "SP", 644332,  12312321, 33, ['JavaScript', 'TypeScript'])
 
         Candidates.list += c01
         Candidates.list += c02

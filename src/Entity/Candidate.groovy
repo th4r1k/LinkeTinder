@@ -9,9 +9,18 @@ class Candidate extends User {
     int age
     List<String> qualification
 
+    Candidate(String name, String email, String country, String state, int doc, int zipCode, int age, List<String> qualification) {
+        super(name, email, country, state, doc, zipCode)
+        this.age = age
+        this.qualification = qualification
 
-    void create(Candidate candidate){
-        Candidates.list += candidate
+    }
+
+    Candidate(){}
+
+
+    def create(Candidate candidate){
+        Candidates.add(candidate)
     }
 
 
@@ -78,4 +87,9 @@ class Candidate extends User {
         }
         Navigate.candidateMenu(name)
     }
+
+    List<Candidate> getCandidates (){
+        Candidates.get()
+    }
+
 }
