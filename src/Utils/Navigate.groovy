@@ -58,10 +58,13 @@ class Navigate {
         switch (command) {
             case "0":
                 start()
+                break
             case "1":
                 createCandidate()
+                break
             case "2":
                 createEnterprise()
+                break
             default:
                 break
         }
@@ -181,7 +184,8 @@ class Navigate {
             qualification = input.nextLine()
         }
 
-        Candidate newCandidate = new Candidate(name: name, email: email, age: age, country: country, zipCode: zipCode, state: state, doc: doc, qualification: qualification.split(","))
+//        Candidate newCandidate = new Candidate(name: name, email: email, age: age, country: country, zipCode: zipCode, state: state, doc: doc, qualification: qualification.split(","))
+        Candidate newCandidate = new Candidate(name, email, country, state, doc, zipCode, age, [qualification])
         newCandidate.create(newCandidate)
 
         println "Candidato cadastrado com sucesso"
