@@ -184,8 +184,8 @@ class Navigate {
             qualification = input.nextLine()
         }
 
-//        Candidate newCandidate = new Candidate(name: name, email: email, age: age, country: country, zipCode: zipCode, state: state, doc: doc, qualification: qualification.split(","))
-        Candidate newCandidate = new Candidate(name, email, country, state, doc, zipCode, age, [qualification])
+        Candidate newCandidate = new Candidate(name: name, email: email, age: age, country: country, zipCode: zipCode, state: state, doc: doc, qualification: qualification.split(","))
+//        Candidate newCandidate = new Candidate(name, email, country, state, doc, zipCode, age, [qualification])
         newCandidate.create(newCandidate)
 
         println "Candidato cadastrado com sucesso"
@@ -265,11 +265,15 @@ class Navigate {
 
     static verify(String name) {
 
-        List<Candidate> data = Candidates.list.findAll { it.name == name }
-        if (data) {
+        List<Candidate> candidato = Candidates.list.findAll { it.name == name }
+        List<Candidate> empresa = Enterprises.list.findAll { it.name == name }
+        if (candidato) {
             candidateMenu(name)
-        } else {
+        } else if(empresa) {
             enterpriseMenu(name)
+        } else{
+            println "Usuario nao encontrado"
+            login()
         }
     }
 

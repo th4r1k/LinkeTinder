@@ -1,12 +1,14 @@
-import Entity.TestCandidate
-import Entity.TestCandidateUncoupled
-import Entity.TestEnterprise
+import Data.Candidates
+import Data.Enterprises
+import Entity.Test.TestCandidate
+import Entity.Test.TestCandidateUncoupled
+import Entity.Test.TestEnterprise
 import Utils.Navigate
 import Utils.Populate
 
 static void main(String[] args) {
 
-//  Feito sem mock, com acoplamento
+////  Feito sem mock, com acoplamento
   TestCandidate test = new TestCandidate()
   test.candidatoCriadoEstaNaLista()
   test.candidatoCriadoAumentaLista()
@@ -19,6 +21,9 @@ static void main(String[] args) {
   TestCandidateUncoupled testWithMock = new TestCandidateUncoupled()
   testWithMock.candidatoCriadoEstaNaListaComMock()
 
+//  limpa teste
+  Candidates.list=[]
+  Enterprises.list=[]
 
   Populate.candidates();
   Populate.enterprises();
