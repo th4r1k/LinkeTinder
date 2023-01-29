@@ -181,8 +181,8 @@ class Navigate {
             qualification = input.nextLine()
         }
 
-        Candidate novo = new Candidate()
-        novo.create(name, email, age, country, zipCode, state, doc, qualification.split(","))
+        Candidate newCandidate = new Candidate(name: name, email: email, age: age, country: country, zipCode: zipCode, state: state, doc: doc, qualification: qualification.split(","))
+        newCandidate.create(newCandidate)
 
         println "Candidato cadastrado com sucesso"
         start()
@@ -234,8 +234,8 @@ class Navigate {
             zipCode = Integer.parseInt(input.nextLine())
         }
 
-        Enterprise newEnterprise = new Enterprise()
-        newEnterprise.create(name, email, country, zipCode, state, doc)
+        Enterprise newEnterprise = new Enterprise(name: name, email: email, country: country, zipCode: zipCode, state: state, doc: doc)
+        newEnterprise.create(newEnterprise)
         println "Empresa cadastrada com sucesso"
         start()
 

@@ -9,8 +9,8 @@ class Enterprise extends User{
     List<Opportunity> opportunity = []
 
 
-    void create(String name, String email, String country, int zipCode, String state, int doc){
-        Enterprise newEnterprise = new Enterprise(name: name, email: email, country: country, zipCode: zipCode, state: state, doc: doc)
+    void create(Enterprise newEnterprise){
+
         Enterprises.list += newEnterprise
     }
 

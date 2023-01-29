@@ -10,9 +10,8 @@ class Candidate extends User {
     List<String> qualification
 
 
-    void create(String name, String email, int age, String country, int zipCode, String state, int doc, def qualification){
-        Candidate newCandidate = new Candidate(name: name, email: email, age: age, country: country, zipCode: zipCode, state: state, doc: doc, qualification: qualification)
-        Candidates.list += newCandidate
+    void create(Candidate candidate){
+        Candidates.list += candidate
     }
 
 
