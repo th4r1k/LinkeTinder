@@ -60,11 +60,8 @@ class Navigate {
                 start()
             case "1":
                 createCandidate()
-                newUser()
-
             case "2":
                 createEnterprise()
-                newUser()
             default:
                 break
         }
@@ -80,18 +77,17 @@ class Navigate {
         println "Digite o codigo do comando"
         Scanner input = new Scanner(System.in);
         String command = input.nextLine();
+        Candidate candidate = new Candidate()
 
         switch (command) {
             case "0":
                 start()
                 break
             case "1":
-                getOpportunities(name)
-                candidateMenu(name)
+                candidate.getOpportunities(name)
                 break
             case "2":
-                matches(name)
-                candidateMenu(name)
+                candidate.match(name)
                 break
             default:
                 break
@@ -108,19 +104,17 @@ class Navigate {
         println "Digite o codigo do comando"
         Scanner input = new Scanner(System.in);
         String command = input.nextLine();
-
+        Enterprise enterprise = new Enterprise()
 
         switch (command) {
             case "0":
                 start()
                 break
             case "1":
-                getCandidates(name)
-                enterpriseMenu(name)
+                enterprise.getOpportunities(name)
                 break
             case "2":
-                enterpriseMatches(name)
-                enterpriseMenu(name)
+                enterprise.match(name)
                 break
             default:
                 break
@@ -187,8 +181,9 @@ class Navigate {
             qualification = input.nextLine()
         }
 
-        Candidate novo = new Candidate(name: name, email: email, age: age, country: country, zipCode: zipCode, state: state, doc: doc, qualification: qualification.split(","))
-        Candidates.list += novo
+        Candidate newCandidate = new Candidate(name: name, email: email, age: age, country: country, zipCode: zipCode, state: state, doc: doc, qualification: qualification.split(","))
+        newCandidate.create(newCandidate)
+
         println "Candidato cadastrado com sucesso"
         start()
 
@@ -239,8 +234,8 @@ class Navigate {
             zipCode = Integer.parseInt(input.nextLine())
         }
 
-        Enterprise novo = new Enterprise(name: name, email: email, country: country, zipCode: zipCode, state: state, doc: doc)
-        Enterprises.list += novo
+        Enterprise newEnterprise = new Enterprise(name: name, email: email, country: country, zipCode: zipCode, state: state, doc: doc)
+        newEnterprise.create(newEnterprise)
         println "Empresa cadastrada com sucesso"
         start()
 
@@ -274,124 +269,6 @@ class Navigate {
         }
     }
 
-
-    static getOpportunities(String name) {
-        def opportunities = Enterprises.list.forEach {
-            if (it.opportunity) {
-                if (it.opportunity.size() > 1) {
-                    it.opportunity.forEach {
-
-                        like(name, it.id)
-                    }
-                } else {
-                    println it.opportunity
-                    like(name, it.opportunity.id)
-                }
-            } else {
-                println "Nao ha mais vagas"
-                candidateMenu(name)
-            }
-        }
-        candidateMenu(name)
-    }
-
-
-    static like(String name, def op) {
-        Scanner input = new Scanner(System.in);
-        println "0 - Like"
-        println "1 - Proximo"
-        String cmd = input.nextLine();
-        if (cmd == "0") {
-
-            for (int i = 0; i < Candidates.list.size(); i++) {
-                if (Candidates.list[i].name == name) {
-                    Candidates.list[i].likes += op
-
-                }
-            }
-        }
-    }
-
-
-    static matches(String name) {
-
-        for (int i = 0; i < Candidates.list.size(); i++) {
-            if (Candidates.list[i].name == name) {
-
-                for (int j = 0; j < Enterprises.list.size(); j++) {
-                    for (int k = 0; k < Enterprises.list[j].opportunity.size(); k++) {
-                        if (Candidates.list[i].likes.flatten().contains(Enterprises.list[j].opportunity[k].id)) {
-                            if (Enterprises.list[j].likes.contains(name)) {
-                                println "***********************************************"
-                                println "Match com a empresa ${Enterprises.list[j].name}"
-                                println "***********************************************"
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
-    }
-
-
-    static getCandidates(String name) {
-        Candidates.list.forEach {
-            if (it.qualification) {
-
-                println ""
-                println "Habilidades do candidato"
-                println it.qualification
-                enterpriseLike(name, it.name)
-
-
-            } else {
-                println "Nao ha mais candidatos"
-                enterpriseMenu(name)
-            }
-        }
-        enterpriseMenu(name)
-    }
-
-
-    static enterpriseLike(String name, def candidateName) {
-        Scanner input = new Scanner(System.in)
-
-        println "0 - Like"
-        println "1 - Proximo"
-        String cmd = input.nextLine()
-        if (cmd == "0") {
-
-            for (int i = 0; i < Enterprises.list.size(); i++) {
-                if (Enterprises.list[i].name == name) {
-                    Enterprises.list[i].likes += [candidateName]
-
-                }
-            }
-        }
-    }
-
-
-    static enterpriseMatches(String name) {
-
-        for (int i = 0; i < Enterprises.list.size(); i++) {
-            if (Enterprises.list[i].name == name) {
-
-                for (int j = 0; j < Candidates.list.size(); j++) {
-                    for (int k = 0; k < Enterprises.list[i].opportunity.size(); k++) {
-                        if (Candidates.list[j].likes.contains(Enterprises.list[i].opportunity[k].id)) {
-
-                            println "***********************************************"
-                            println "Match com o candidato ${Candidates.list[j].name} na vaga ${Enterprises.list[i].opportunity[k].description}"
-                            println "***********************************************"
-
-                        }
-                    }
-                }
-                break
-            }
-        }
-    }
 
     static getCandidates() {
         println ""

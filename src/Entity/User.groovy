@@ -7,7 +7,7 @@ abstract class User {
 
     String name, email, country, state
     int doc, zipCode
-    List<User> matches = []
+//    List<User> matches = []
     List<User> likes = []
 
 
