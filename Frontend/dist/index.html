@@ -1,0 +1,142 @@
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkeTinder</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+    <nav class="">
+        <h1>LinkeTinder</h1>
+    </nav>
+    <main class="container">
+        <div id="loginBox">
+            <h2>Bem vindo</h2>
+            <div class="login">
+                <input id="userLogin" type="text" placeholder="Nome do usuário"></input>
+                <button id="loginButton">Entrar</button>
+            </div>
+            <div class="newUser">
+                Não possue cadastro?
+                <button class="addBtn">Criar nova conta</button>
+            </div>
+        </div>
+
+
+        <div id="candidateMenu">
+            <h2>Menu do candidato</h2>
+            <div>
+                <button id="qualificationBtn">Adicionar qualificações</button>
+                <button id="jobsBtn">Ver oportunidades</button>
+                <button id="matchBtn">Ver matches</button>
+                <div id="renderJobs">
+
+                </div>
+            </div>
+        </div>
+
+        <div id="qualicationInfo">
+            <br><br>
+            <h2>Selecione as habilidades que possui</h2>
+            <label>Java</label>
+            <input id="userJava" type="checkbox" value="java">
+            <label>Groovy</label>
+            <input id="userGroovy" type="checkbox" value="groovy">
+            <label>Javascript</label>
+            <input id="userJs" type="checkbox" value="javascript">
+            <label>Phyton</label>
+            <input id="userPhyton" type="checkbox" value="phyton">
+            <button id="saveQualification">Salvar</button>
+        </div>
+        <div id="opportunityInfo"></div>
+        <div id="matchInfo"></div>
+
+
+        <div id="enterpriseMenu">
+            <h2>Menu da empresa</h2>
+            <div>
+                <button id="addOpportunityBtn">Adicionar Vagas</button>
+                <button id="delOpportunityBtn">Deletar Vagas</button>
+                <button id="usersBtn">Ver oportunidades</button>
+                <button id="matchsBtn">Ver matches</button>
+                <div>
+                    <canvas id="myChart"></canvas>
+                </div>
+                <div id="renderQualification">
+                </div>
+            </div>
+        </div>
+
+        <div id="addOppoInfo">
+            <br><br>
+            <h2>Cadastrar nova vaga</h2>
+            <br>
+            <input placeholder="Id" id="jobId" type="number">
+            <input placeholder="Descrição" id="jobsDescription" type="text">
+            <br><br>
+            <h3>Requisitos</h3>
+            <label>Java</label>
+            <input id="jobJava" type="checkbox" value="java">
+            <label>Groovy</label>
+            <input id="jobGroovy" type="checkbox" value="groovy">
+            <label>Javascript</label>
+            <input id="jobJs" type="checkbox" value="javascript">
+            <label>Phyton</label>
+            <input id="jobPhyton" type="checkbox" value="phyton">
+            <br><br><br>
+            <button id="saveOppotunity">Salvar</button>
+        </div>
+        <div id="opportunitiesInfo"></div>
+        <div id="matchInfo"></div>
+
+
+    </main>
+
+    <div class="createAccModal">
+        <div class="content">
+
+            <h1>Criar nova conta</h1>
+
+            <fieldset>
+                <label>Candidato</label>
+                <input id="candidateRadio" name="type" type="radio" value="candidate" />
+                <label>Empresa</label>
+                <input id="enterpriseRadio" name="type" type="radio" value="enterprise" />
+            </fieldset>
+
+            <label>Nome</label>
+            <input id="name" type="text" autocomplete="off" />
+
+            <label>Email</label>
+            <input id="email" type="email" autocomplete="off" />
+
+            <label>CPF/CNPJ</label>
+            <input id="doc" type="number" autocomplete="off" />
+
+            <label>País</label>
+            <input id="country" type="text" />
+
+            <label>Estado</label>
+            <input id="state" type="text" />
+
+            <label>Cep</label>
+            <input id="zipCode" type="number" />
+
+            <br>
+            <button class="addUser">Criar</button>
+            <small>(Para cancelar clique fora da janela do modal)</small>
+
+        </div>
+    </div>
+
+    <script src="app.min.js"> </script>
+
+
+
+</body>
+
+</html>
