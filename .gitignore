@@ -24,3 +24,5 @@ out/
 bin/
 .jqwik-database
 .gitignore
+
+node_modules
