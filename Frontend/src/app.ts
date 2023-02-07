@@ -349,7 +349,7 @@ let renderQualification: HTMLElement | null = document.getElementById(
 const renderOpportunitiesForEnterprise = () => {
   renderQualification!.innerHTML = "";
   candidates.forEach((candidate: Candidate) => {
-    if (candidate.qualification) {
+    if (candidate.qualification.length > 0) {
       renderQualification?.insertAdjacentHTML(
         "beforeend",
         `<hr><p>Conhecimentos:${candidate.qualification}<button>Like</button></p>`
