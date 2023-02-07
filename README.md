@@ -22,7 +22,7 @@ Java 8+
 
 Clone or download files
 
-Inside the main path run:
+Inside the Backend path run:
 
     javac -jar LinkeTinder.jar
 
@@ -46,6 +46,15 @@ Create a new user(Candidate/Enterprise), Login with the user, add qualifications
 - like: view opportunities and like;
 - match: view reciprocal likes;
 - chart: chart with total of candidates and qualifications.
+
+### Installing
+
+Clone or download files
+
+Inside the main path open :
+
+    Frontend\dist\index.html
+
 
 ## Built With
 
