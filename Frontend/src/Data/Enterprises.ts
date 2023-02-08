@@ -9,7 +9,7 @@ export class Enterprises {
         localStorage.getItem("enterprises") || ""
       ));
     } else {
-      return [];
+      return (this.list = []);
     }
   }
   static create(user: Enterprise) {
