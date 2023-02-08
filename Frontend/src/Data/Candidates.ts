@@ -7,7 +7,7 @@ export class Candidates {
     if (localStorage.getItem("candidates")) {
       return (this.list = JSON.parse(localStorage.getItem("candidates") || ""));
     } else {
-      return [];
+      return (this.list = []);
     }
   }
 

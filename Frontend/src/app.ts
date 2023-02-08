@@ -232,11 +232,13 @@ const renderOpportunitiesForCandidates = () => {
       enterprise.opportunity.forEach((opportunity: IOpportunity) => {
         renderJobs!.insertAdjacentHTML(
           "beforeend",
+
           `<hr><p>Afinidade:${affinityIndex(opportunity.qualification)}/${
             opportunity.qualification.length
           } Descricao:${opportunity.description} Requisitos:${
             opportunity.qualification
           }<button>Like</button></p>`
+
         );
         let like: IUserLike = {
           id: enterprise.userName,
@@ -252,6 +254,7 @@ const renderOpportunitiesForCandidates = () => {
   });
 };
 
+
 function affinityIndex(opportunityQualifications: string[]): number {
   let index: number = 0;
   userInfo.qualification?.forEach((qualification) => {
@@ -261,6 +264,7 @@ function affinityIndex(opportunityQualifications: string[]): number {
   });
   return index;
 }
+
 
 function candidateLike(like: IUserLike) {
   candidates.forEach((candidate: Candidate) => {
