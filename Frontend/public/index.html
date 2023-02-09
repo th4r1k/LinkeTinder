@@ -17,7 +17,8 @@
         <div id="loginBox">
             <h2>Bem vindo</h2>
             <div class="login">
-                <input id="userLogin" type="text" placeholder="Nome do usuário"></input>
+                <input id="userLogin" type="text" placeholder="Nome do usuário" pattern="[A-z]{4,15}"
+                    maxlength="14"></input>
                 <button id="loginButton">Entrar</button>
             </div>
             <div class="newUser">
@@ -76,7 +77,7 @@
             <h2>Cadastrar nova vaga</h2>
             <br>
             <input placeholder="Id" id="jobId" type="number">
-            <input placeholder="Descrição" id="jobsDescription" type="text">
+            <input placeholder="Descrição" id="jobsDescription" type="text" pattern="[aA-zZ]+">
             <br><br>
             <h3>Requisitos</h3>
             <label>Java</label>
@@ -109,22 +110,22 @@
             </fieldset>
 
             <label>Nome</label>
-            <input id="name" type="text" autocomplete="off" />
+            <input id="name" type="text" autocomplete="off" pattern="[aA-zZ]{4,15}" />
 
             <label>Email</label>
             <input id="email" type="email" autocomplete="off" />
 
             <label>CPF/CNPJ</label>
-            <input id="doc" type="number" autocomplete="off" />
+            <input id="doc" type="number" autocomplete="off" minlength="11" maxlength="15" />
 
             <label>País</label>
-            <input id="country" type="text" />
+            <input id="country" type="text" pattern="[aA-zZ]{4,15}" />
 
             <label>Estado</label>
-            <input id="state" type="text" />
+            <input id="state" type="text" pattern="[aA-zZ]{2,12}" />
 
             <label>Cep</label>
-            <input id="zipCode" type="number" />
+            <input id="zipCode" type="number" maxlength="9" />
 
             <br>
             <button class="addUser">Criar</button>
