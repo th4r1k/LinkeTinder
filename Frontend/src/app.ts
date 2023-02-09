@@ -51,52 +51,45 @@ window.onclick = function (event: MouseEvent) {
 };
 
 const addNewUser = function () {
-  if (
-    (candidateRadio.checked == false && enterpriseRadio.checked == false) ||
-    userName.value == "" ||
-    email.value == "" ||
-    doc.value == "" ||
-    country.value == "" ||
-    state.value == "" ||
-    zipCode.value == ""
-  ) {
-    alert("Nenhum campo pode ficar em branco");
-  } else if (!verifyCandidateExists(userName.value)) {
-    alert("Usuário ja existe!");
-  } else if (!verifyEnterpriseExists(userName.value)) {
-    alert("Usuário ja existe!");
-  } else {
-    if (candidateRadio.checked == true) {
-      const newCandidate = new Candidate(
-        userName!.value.replace(/\s/g, ""),
-        email.value,
-        parseInt(doc!.value),
-        country.value,
-        state.value,
-        parseInt(zipCode.value),
-        [],
-        []
-      );
-      Candidates.create(newCandidate);
-      Candidates.save();
-    } else if (enterpriseRadio.checked == true) {
-      const newEnterprise = new Enterprise(
-        userName!.value.replace(/\s/g, ""),
-        email.value,
-        parseInt(doc!.value),
-        country.value,
-        state.value,
-        parseInt(zipCode.value),
-        [],
-        []
-      );
-      Enterprises.create(newEnterprise);
-      Enterprises.save();
+  if (validadeNewUserForm()) {
+    if (!verifyCandidateExists(userName.value)) {
+      alert("Usuário ja existe!");
+    } else if (!verifyEnterpriseExists(userName.value)) {
+      alert("Usuário ja existe!");
+    } else {
+      if (candidateRadio.checked == true) {
+        const newCandidate = new Candidate(
+          userName!.value.replace(/\s/g, ""),
+          email.value,
+          parseInt(doc!.value),
+          country.value,
+          state.value,
+          parseInt(zipCode.value),
+          [],
+          []
+        );
+        Candidates.create(newCandidate);
+        Candidates.save();
+        createAccModal!.style.display = "none";
+      } else if (enterpriseRadio.checked == true) {
+        const newEnterprise = new Enterprise(
+          userName!.value.replace(/\s/g, ""),
+          email.value,
+          parseInt(doc!.value),
+          country.value,
+          state.value,
+          parseInt(zipCode.value),
+          [],
+          []
+        );
+        Enterprises.create(newEnterprise);
+        Enterprises.save();
+        createAccModal!.style.display = "none";
+      }
     }
-
-    createAccModal!.style.display = "none";
   }
 };
+
 const addUser: HTMLElement | null = document.querySelector(".addUser");
 addUser?.addEventListener("click", addNewUser);
 
@@ -238,7 +231,6 @@ const renderOpportunitiesForCandidates = () => {
           } Descricao:${opportunity.description} Requisitos:${
             opportunity.qualification
           }<button>Like</button></p>`
-
         );
         let like: IUserLike = {
           id: enterprise.userName,
@@ -254,7 +246,6 @@ const renderOpportunitiesForCandidates = () => {
   });
 };
 
-
 function affinityIndex(opportunityQualifications: string[]): number {
   let index: number = 0;
   userInfo.qualification?.forEach((qualification) => {
@@ -264,7 +255,6 @@ function affinityIndex(opportunityQualifications: string[]): number {
   });
   return index;
 }
-
 
 function candidateLike(like: IUserLike) {
   candidates.forEach((candidate: Candidate) => {
@@ -526,3 +516,40 @@ new Chart(ctx, {
     },
   },
 });
+
+// Input Sanitization **************************************************************
+
+const nameRegex: RegExp = /[A-z]{4,15}/;
+const emailRegex: RegExp = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+const DocRegex: RegExp =
+  /([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/;
+const countryRegex: RegExp = /[A-z]{4,15}/;
+const stateRegex: RegExp = /[A-z]{2}/;
+const zipCodeRegex: RegExp = /^[0-9]{5}-?[0-9]{3}$/;
+const descriptionRegex: RegExp = /[A-z]{4,50}/;
+
+function validadeNewUserForm(): boolean {
+  let isOk = false;
+  if (candidateRadio.checked == false && enterpriseRadio.checked == false) {
+    alert("Selecionar candidato ou empresa");
+  } else if (!nameRegex.test(userName.value)) {
+    alert(
+      "No campo nome sao aceito apenas caracteres alfanumerios de 4 a 15 digitos, nao sendo aceito espaco"
+    );
+  } else if (!emailRegex.test(email.value)) {
+    alert("Favor verifique se o email esta correto");
+  } else if (!DocRegex.test(doc.value)) {
+    alert("CPF ou CNPJ invalido");
+  } else if (!countryRegex.test(country.value)) {
+    alert(
+      "No campo pais sao aceito apenas caracteres alfanumerios de 4 a 15 digitos"
+    );
+  } else if (!stateRegex.test(state.value)) {
+    alert("Digite apena a sigla do estado");
+  } else if (!zipCodeRegex.test(zipCode.value)) {
+    alert("Favor digitar um CEP valido");
+  } else {
+    isOk = true;
+  }
+  return isOk;
+}
