@@ -1,9 +1,6 @@
 package Utils
 
-import Data.Candidates
-import Data.Enterprises
-import Entity.Candidate
-import Entity.Enterprise
+import Entity.User
 
 class Navigate {
 
@@ -70,9 +67,9 @@ class Navigate {
         }
     }
 
-    static candidateMenu(String name) {
+    static candidateMenu(def candidate) {
         println ""
-        println "Ola $name"
+        println "Ola $candidate.name"
         println "1 - Ver oportunidades"
         println "2 - ver matches"
         println "0 - Sair"
@@ -80,26 +77,27 @@ class Navigate {
         println "Digite o codigo do comando"
         Scanner input = new Scanner(System.in);
         String command = input.nextLine();
-        Candidate candidate = new Candidate()
+//        Candidate candidate = new Candidate()
 
         switch (command) {
             case "0":
                 start()
                 break
             case "1":
-                candidate.getOpportunities(name)
+                candidateGetOpportunities(candidate)
+//                candidate.getOpportunities(name)
                 break
             case "2":
-                candidate.match(name)
+                candidateMatch(candidate)
                 break
             default:
                 break
         }
     }
 
-    static enterpriseMenu(String name) {
+    static enterpriseMenu(def enterprise) {
         println ""
-        println "Ola $name"
+        println "Ola $enterprise.name"
         println "1 - Ver candidatos"
         println "2 - ver matches"
         println "0 - Sair"
@@ -107,17 +105,17 @@ class Navigate {
         println "Digite o codigo do comando"
         Scanner input = new Scanner(System.in);
         String command = input.nextLine();
-        Enterprise enterprise = new Enterprise()
 
         switch (command) {
             case "0":
                 start()
                 break
             case "1":
-                enterprise.getOpportunities(name)
+
+                enterpriseGetOpportunities(enterprise)
                 break
             case "2":
-                enterprise.match(name)
+                enterpriseMatch(enterprise)
                 break
             default:
                 break
@@ -135,6 +133,13 @@ class Navigate {
             name = input.nextLine()
         }
 
+        println "Digite a senha"
+        String password = input.nextLine()
+        while (password == "") {
+            println "Digite o nome"
+            password = input.nextLine()
+        }
+
         println "Digite o CPF"
         int doc = Integer.parseInt(input.nextLine())
         while (doc == "") {
@@ -147,13 +152,6 @@ class Navigate {
         while (email == "") {
             println "Digite o email"
             email = input.nextLine()
-        }
-
-        println "Digite a idade"
-        int age = Integer.parseInt(input.nextLine())
-        while (age == "") {
-            println "Digite a idade"
-            age = Integer.parseInt(input.nextLine())
         }
 
         println "Digite o pais"
@@ -177,16 +175,10 @@ class Navigate {
             zipCode = Integer.parseInt(input.nextLine())
         }
 
-        println "Quais das habilidades possue? "
-        String qualification = input.nextLine();
-        while (qualification == "") {
-            println "Digite o estado"
-            qualification = input.nextLine()
-        }
 
-        Candidate newCandidate = new Candidate(name: name, email: email, age: age, country: country, zipCode: zipCode, state: state, doc: doc, qualification: qualification.split(","))
-//        Candidate newCandidate = new Candidate(name, email, country, state, doc, zipCode, age, [qualification])
-        newCandidate.create(newCandidate)
+        User newCandidate = new User(name: name, email: email, country: country, zipCode: zipCode, state: state, doc: doc, password: password, category: "candidate")
+        Db db = new Db()
+        db.createUser(newCandidate)
 
         println "Candidato cadastrado com sucesso"
         start()
@@ -198,37 +190,45 @@ class Navigate {
         Scanner input = new Scanner(System.in);
 
         println "Digite o nome"
-        String name = input.nextLine();
+        String name = input.nextLine()
         while (name == "") {
             println "Digite o nome"
-            name = input.nextLine();
+            name = input.nextLine()
         }
-        println "Digite o CNPJ"
-        int doc = Integer.parseInt(input.nextLine());
+
+        println "Digite a senha"
+        String password = input.nextLine()
+        while (password == "") {
+            println "Digite o nome"
+            password = input.nextLine()
+        }
+
+        println "Digite o CPF"
+        int doc = Integer.parseInt(input.nextLine())
         while (doc == "") {
-            println "Digite o CNPJ"
-            doc = Integer.parseInt(input.nextLine());
+            println "Digite o CPF"
+            doc = Integer.parseInt(input.nextLine())
         }
 
         println "Digite o email"
-        String email = input.nextLine();
+        String email = input.nextLine()
         while (email == "") {
             println "Digite o email"
-            email = input.nextLine();
+            email = input.nextLine()
         }
 
         println "Digite o pais"
-        String country = input.nextLine();
+        String country = input.nextLine()
         while (country == "") {
             println "Digite o pais"
-            country = input.nextLine();
+            country = input.nextLine()
         }
 
         println "Digite o estado"
-        String state = input.nextLine();
+        String state = input.nextLine()
         while (state == "") {
             println "Digite o estado"
-            state = input.nextLine();
+            state = input.nextLine()
         }
 
         println "Digite o Cep"
@@ -238,8 +238,11 @@ class Navigate {
             zipCode = Integer.parseInt(input.nextLine())
         }
 
-        Enterprise newEnterprise = new Enterprise(name: name, email: email, country: country, zipCode: zipCode, state: state, doc: doc)
-        newEnterprise.create(newEnterprise)
+
+        User newEnterprise = new User(name: name, email: email, country: country, zipCode: zipCode, state: state, doc: doc, password: password, category: "enterprise")
+        Db db = new Db()
+        db.createUser(newEnterprise)
+
         println "Empresa cadastrada com sucesso"
         start()
 
@@ -247,45 +250,43 @@ class Navigate {
 
 
     static login() {
-
+        Db db = new Db()
+        def candidatesList = db.candidateList()
+        def enterpriseList = db.enterpriseList()
         println ""
         println "Lista de empresas:"
-        Enterprises.list.forEach { println it.name }
+
+
+        enterpriseList.forEach { println it.name }
 
         println "Lista de candidatos:"
-        Candidates.list.forEach { println it.name }
+        candidatesList.forEach { println it.name }
+
 
         Scanner input = new Scanner(System.in);
         println "Digite algum dos nomes acima para fazer login:"
         String name = input.nextLine();
-        verify(name)
 
-    }
-
-
-    static verify(String name) {
-
-        List<Candidate> candidato = Candidates.list.findAll { it.name == name }
-        List<Candidate> empresa = Enterprises.list.findAll { it.name == name }
-        if (candidato) {
-            candidateMenu(name)
-        } else if(empresa) {
-            enterpriseMenu(name)
-        } else{
+        def queryResult = db.getUserInfo(name)
+        if (queryResult.category == "candidate") {
+            candidateMenu(queryResult)
+        } else if (queryResult.category == "enterprise") {
+            enterpriseMenu(queryResult)
+        } else {
             println "Usuario nao encontrado"
             login()
         }
+
     }
 
-
     static getCandidates() {
+        Db db = new Db()
         println ""
         println "Lista de candidatos:"
-        Candidates.list.forEach { println it.name }
+        db.getCandidates()
         println("Digite 0 para voltar")
         Scanner input = new Scanner(System.in);
         def cmd = input.nextLine()
-
 
         if (cmd) {
             start()
@@ -294,9 +295,11 @@ class Navigate {
 
 
     static getEnterprises() {
+        Db db = new Db()
+
         println ""
         println "Lista empresas:"
-        Enterprises.list.forEach { println it.name }
+        db.getEnterprises()
         Scanner input = new Scanner(System.in);
         println("Digite 0 para voltar")
         def cmd = input.nextLine()
@@ -305,4 +308,70 @@ class Navigate {
             start()
         }
     }
+
+    static candidateGetOpportunities(def candidate) {
+        Db db = new Db()
+        def id = db.getCandidateId(candidate.id)
+        def jobs = db.jobsDescriptions()
+        jobs.forEach {
+            db.jobsQualifications(it)
+            Scanner input = new Scanner(System.in)
+
+            println "0 - Like"
+            println "1 - Proximo"
+            String cmd = input.nextLine()
+            if (cmd == "0") {
+                db.candidateLikeJob(it.id, id.id)
+            }
+        }
+        println("Nao ha mais vagas cadastradas no momento")
+        candidateMenu(candidate)
+    }
+
+
+    static enterpriseGetOpportunities(def enterprise) {
+        Db db = new Db()
+        def id = db.getEnterpriseId(enterprise.id)
+
+        def candidates = db.candidateList()
+        candidates.forEach {
+            db.candidatesQualifications(it)
+            Scanner input = new Scanner(System.in)
+            println "0 - Like"
+            println "1 - Proximo"
+            String cmd = input.nextLine()
+            if (cmd == "0") {
+                db.enterpriseLikeJob(id.id, it.id)
+                println("curtiu o candidato")
+            }
+        }
+        println("Nao ha mais usuarios")
+        enterpriseMenu(enterprise)
+    }
+
+    static candidateMatch(def candidate) {
+        Db db = new Db()
+        def matches = db.candidateMatches()
+        def id = db.getCandidateId(candidate.id)
+
+
+        matches.forEach {
+            if (id.id == it.candidate_id)
+                println("Match com a empresa ${it.name} entrar em contato pelo email ${it.email}")
+        }
+        candidateMenu(candidate)
+    }
+
+    static enterpriseMatch(def enterprise) {
+        Db db = new Db()
+        def id = db.getEnterpriseId(enterprise.id)
+        def matches = db.enterpriseMatches()
+        matches.forEach {
+
+            if (id.id == it.enterprise_id)
+                println("Match com o usuario ${it.name} entrar em contato pelo email ${it.email}")
+        }
+        enterpriseMenu(enterprise)
+    }
+
 }
