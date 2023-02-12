@@ -3,12 +3,10 @@ package Entity
 import groovy.transform.Canonical
 
 @Canonical
-abstract class User {
+ class User {
 
-    String name, email, country, state
+    String name, email, country, state, password, category
     int doc, zipCode
-//    List<User> matches = []
-    List<User> likes = []
 
 
 }

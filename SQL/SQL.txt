@@ -6,7 +6,7 @@ CREATE TABLE users(
 	doc INT NOT NULL,
 	country VARCHAR(15) NOT NULL,
 	state VARCHAR(15) NOT NULL,
-	type VARCHAR(15) NOT NULL
+	category VARCHAR(15) NOT NULL
 );
 
 CREATE TABLE candidates(
@@ -72,7 +72,7 @@ CREATE TABLE enterprise_likes(
 );
 
 --Criando usuários (5 candidados e 5 empresas)
-INSERT INTO users (name, email, password, doc, country, state,type)
+INSERT INTO users (name, email, password, doc, country, state,category)
 VALUES
 	('candidato01','candidato01@gmail.com','candidato01',123456,'brasil','pr', 'candidate'),
 	('candidato02','candidato02@gmail.com','candidato02',654321,'brasil','sp','candidate'),
