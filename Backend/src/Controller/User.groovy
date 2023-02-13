@@ -31,7 +31,7 @@ class User {
 
         if(queryResult){
             if (queryResult.category == "candidate") {
-                View.Candidate.menu(queryResult)
+                Candidate.checkData(queryResult)
             } else if (queryResult.category == "enterprise") {
                 View.Enterprise.menu(queryResult)
             }

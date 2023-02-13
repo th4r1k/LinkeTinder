@@ -47,7 +47,7 @@ class QualificationDAO {
     public candidate(def list) {
         def sql = Sql.newInstance(url, user, password, driver)
         print(sql.firstRow("SELECT education FROM candidates WHERE user_id=${list.id}"))
-        println( sql.rows("SELECT skill FROM candidates, candidate_qualifications, qualifications where candidates.id=candidate_qualifications.candidate_id  AND candidate_qualifications.qualification_id = qualifications.id AND candidates.id=${list.id}"))
+        println( sql.rows("SELECT skill FROM candidates, candidate_qualifications, qualifications where candidates.id=candidate_qualifications.candidate_id  AND candidate_qualifications.qualification_id = qualifications.id AND candidates.user_id=${list.id}"))
         sql.close()
     }
 
@@ -55,6 +55,18 @@ class QualificationDAO {
         def sql = Sql.newInstance(url, user, password, driver)
         println(list.description + sql.rows("SELECT DISTINCT skill FROM jobs, job_qualifications, qualifications WHERE jobs.id=job_qualifications.job_id AND  job_qualifications.qualification_id = qualifications.id AND jobs.id=${list.id}"))
         sql.close()
+    }
+
+    public addCandidateQualifications(int candidate_id, int skill_id) {
+        def sql = Sql.newInstance(url, user, password, driver)
+
+        try {
+            def id = sql.executeInsert "INSERT INTO candidate_qualifications (qualification_id, candidate_id) VALUES (${skill_id},${candidate_id})"
+        } catch (Exception e) {
+            println "Falha ao adicionar nova competencia"
+        } finally {
+            sql.close()
+        }
     }
 
 }

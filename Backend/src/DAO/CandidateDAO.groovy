@@ -53,4 +53,25 @@ class CandidateDAO {
         return list
     }
 
+    public getEducation(def id){
+        def sql = Sql.newInstance(url, user, password, driver)
+        def education = sql.firstRow("SELECT education FROM candidates WHERE user_id=${id}")
+        sql.close()
+        return education
+    }
+
+    public editEducation(def id, newEducation){
+        def sql = Sql.newInstance(url, user, password, driver)
+        def education = sql.executeInsert("UPDATE candidates SET education=${newEducation} WHERE user_id=${id}")
+        sql.close()
+        return education
+    }
+
+    public editAge(def id, newAge){
+        def sql = Sql.newInstance(url, user, password, driver)
+        def education = sql.executeInsert("UPDATE candidates SET age=${newAge} WHERE user_id=${id}")
+        sql.close()
+        return education
+    }
+
 }

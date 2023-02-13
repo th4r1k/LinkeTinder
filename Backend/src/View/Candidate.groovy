@@ -1,11 +1,16 @@
 package View
 
 class Candidate {
+
     static menu(def candidate) {
+
+
+
         println ""
         println "Ola $candidate.name"
         println "1 - Ver oportunidades"
         println "2 - ver matches"
+        println "3 - Minhas competencias"
         println "0 - Sair"
         println ""
         println "Digite o codigo do comando"
@@ -23,8 +28,13 @@ class Candidate {
             case "2":
                 Controller.Candidate.match(candidate)
                 break
+            case "3":
+                CandidateQualifications.menu(candidate)
+                break
             default:
                 break
         }
     }
+
 }
+
