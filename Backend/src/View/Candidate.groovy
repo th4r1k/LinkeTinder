@@ -1,0 +1,30 @@
+package View
+
+class Candidate {
+    static menu(def candidate) {
+        println ""
+        println "Ola $candidate.name"
+        println "1 - Ver oportunidades"
+        println "2 - ver matches"
+        println "0 - Sair"
+        println ""
+        println "Digite o codigo do comando"
+        Scanner input = new Scanner(System.in);
+        String command = input.nextLine();
+
+
+        switch (command) {
+            case "0":
+                Menu.start()
+                break
+            case "1":
+                Controller.Candidate.getOpportunities(candidate)
+                break
+            case "2":
+                Controller.Candidate.match(candidate)
+                break
+            default:
+                break
+        }
+    }
+}
