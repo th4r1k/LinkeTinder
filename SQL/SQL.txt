@@ -1,0 +1,171 @@
+CREATE TABLE users(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(30) NOT NULL,
+	email VARCHAR(30) UNIQUE,
+	password VARCHAR(30) NOT NULL,
+	doc BIGINT NOT NULL,
+	country VARCHAR(15) NOT NULL,
+	state VARCHAR(15) NOT NULL,
+	category VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE candidates(
+	id SERIAL PRIMARY KEY,
+	user_id INT UNIQUE,
+	age INT,
+	education VARCHAR(150),
+	FOREIGN KEY(user_id) REFERENCES users(id)
+);
+
+CREATE TABLE enterprises(
+	id SERIAL PRIMARY KEY,
+	user_id INT UNIQUE,
+	city VARCHAR(30),
+	descripition VARCHAR(200),
+	FOREIGN KEY(user_id) REFERENCES users(id)
+);
+
+CREATE TABLE qualifications(
+	id SERIAL PRIMARY KEY,
+	skill VARCHAR(30)
+);
+
+CREATE TABLE jobs(
+	id SERIAL PRIMARY KEY,
+	enterprise_id INT,
+	description VARCHAR(200),
+	FOREIGN KEY(enterprise_id) REFERENCES enterprises(id)
+);
+
+CREATE TABLE candidate_qualifications(
+	id SERIAL PRIMARY KEY,
+	candidate_id INT,
+	qualification_id INT,
+	FOREIGN KEY(candidate_id) REFERENCES candidates(id),
+	FOREIGN KEY(qualification_id) REFERENCES qualifications(id)
+);
+
+CREATE TABLE job_qualifications(
+	id SERIAL PRIMARY KEY,
+	job_id INT,
+	qualification_id INT,
+	FOREIGN KEY(job_id) REFERENCES jobs(id),
+	FOREIGN KEY(qualification_id) REFERENCES qualifications(id)
+);
+
+
+CREATE TABLE candidate_likes(
+	id SERIAL PRIMARY KEY,
+	candidate_id INT,
+	job_id INT,
+	FOREIGN KEY(candidate_id) REFERENCES candidates(id),
+	FOREIGN KEY(job_id) REFERENCES jobs(id)
+);
+
+CREATE TABLE enterprise_likes(
+	id SERIAL PRIMARY KEY,
+	candidate_id INT,
+	enterprise_id INT,
+	FOREIGN KEY(candidate_id) REFERENCES candidates(id),
+	FOREIGN KEY(enterprise_id) REFERENCES enterprises(id)
+
+);
+
+--Criando usuários (5 candidados e 5 empresas)
+INSERT INTO users (name, email, password, doc, country, state,category)
+VALUES
+	('candidato01','candidato01@gmail.com','candidato01',123456,'brasil','pr', 'candidate'),
+	('candidato02','candidato02@gmail.com','candidato02',654321,'brasil','sp','candidate'),
+	('candidato03','candidato03@gmail.com','candidato03',987654,'brasil','rj','candidate'),
+	('candidato04','candidato04@gmail.com','candidato04',456789,'brasil','go','candidate'),
+	('candidato05','candidato05@gmail.com','candidato05',159482,'brasil','mt','candidate'),
+
+	('empresa01','empresao01@gmail.com','empresa01',123456123,'brasil','pr','enterprise'),
+	('empresa02','empresa02@gmail.com','empresa02',654321123,'brasil','sp','enterprise'),
+	('empresa03','empresa03@gmail.com','empresa03',987654123,'brasil','rj','enterprise'),
+	('empresa04','empresa04@gmail.com','empresa04',456789123,'brasil','go','enterprise'),
+	('empresa05','empresa05@gmail.com','empresa05',159482123,'brasil','mt','enterprise');
+
+--Adicionando dados aos candidatos
+INSERT INTO candidates (user_id, age, education)
+VALUES
+	(1, 28,'Engenharia da computação - UFPR'),
+	(2, 30,'Ciência da computação - USP'),
+	(3, 22,'Ensino superior - Colégio Positivo'),
+	(4, 19,'Ensino técnico informática - Lanhouse'),
+	(5, 25,'Engenharia da computação - UFMT');
+	
+-- Adicionando dados as empresas
+INSERT INTO enterprises (user_id, city, descripition)
+VALUES
+	(6,'Curitiba','Empresa de softwares voltado a sáude, há 10 anos no mercado'),
+	(7,'São Paulo','Empresa de coxinha, top10 Great places to Work'),
+	(8,'Petropolis','Start up de games voltado a pessoas com deficiencia visual'),
+	(9,'Goiania','Construtora de casa da cachorros'),
+	(10,'Cuiaba','Multinacional de fabricação de drones agricolas');
+
+-- Adicionando competências
+INSERT INTO qualifications (skill)
+VALUES
+	('Java'),
+	('Groovy'),
+	('Javascript'),
+	('Phyton');
+
+-- Atribuindo competências a candidatos
+INSERT INTO candidate_qualifications (candidate_id, qualification_id)
+VALUES
+	(1,1),
+	(1,2),
+	(2,4),
+	(3,3),
+	(4,2),
+	(4,3),
+	(5,1),
+	(5,2),
+	(5,3),
+	(5,4);
+
+-- Adicionando vagas das empresas
+INSERT INTO jobs(enterprise_id, description)
+VALUES
+	(1, 'Programador Jr homeoffice'),
+	(1, 'Programador Senior'),
+	(2, 'Estagiario'),
+	(3, 'Programador Pleno'),
+	(4, 'Programador Jr'),
+	(5, 'Estagiario');
+	
+-- Atribuindo competências as vagas
+INSERT INTO job_qualifications (job_id, qualification_id)
+VALUES
+	(1,1),
+	(1,2),
+	(2,1),
+	(2,2),
+	(3,1),
+	(3,2),
+	(4,3),
+	(4,4),
+	(5,3),
+	(6,1),
+	(6,2);
+
+-- likes dos candidatos
+INSERT INTO candidate_likes(candidate_id, job_id)
+VALUES
+	(1,1),
+	(1,2),
+	(2,3),
+	(3,4),
+	(4,5),
+	(5,6);
+
+-- likes das empresas
+INSERT INTO enterprise_likes(enterprise_id, candidate_id)
+VALUES
+	(1,1),
+	(2,2),
+	(3,4),
+	(4,5),
+	(5,3);
