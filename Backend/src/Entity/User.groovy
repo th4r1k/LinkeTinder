@@ -6,7 +6,8 @@ import groovy.transform.Canonical
  class User {
 
     String name, email, country, state, password, category
-    int doc, zipCode
+    BigInteger doc
+    int zipCode
 
 
 }

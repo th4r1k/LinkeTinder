@@ -2,9 +2,8 @@
 
 # Backend
 
-A simple Groovy program, with PostgreSql persistance.
-It start's with 5 candidates, 5 enterprise, 6 jobs opportunities, its possible to create more Users(Candidates/Enterprises).Login with a user, see opportunities and like, if the like is reciprocal its a match and important information is now avaible.
-
+A simple Groovy program, without persistance.
+It start's with 5 candidates and 5 enterprise, its possible to create more. Login with the user, see opportunities and like, if the like is reciprocal its a match and important information is now avaible.
 
 ## Features
 
@@ -22,14 +21,6 @@ Java 8+
 ### Installing
 
 Clone or download files
-
-Configure PostgreSql or change configuration in:
-
-    (line 8-11) Backend/src/utils/Db.groovy
-
-After configured database, paste all code in a query from:
-
-    SQL/SQL.txt
 
 Inside the Backend path run:
 
