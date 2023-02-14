@@ -1,0 +1,33 @@
+plugins {
+
+    id 'groovy'
+
+    id 'application'
+}
+
+repositories {
+
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation 'org.postgresql:postgresql:42.2.10'
+    implementation 'org.codehaus.groovy:groovy-all:3.0.13'
+    implementation 'com.google.guava:guava:31.1-jre'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+
+}
+
+application {
+    mainClass = 'linketinder.App'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+run {
+    standardInput = System.in
+}
