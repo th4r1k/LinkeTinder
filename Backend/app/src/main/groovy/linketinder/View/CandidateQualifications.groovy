@@ -1,37 +1,41 @@
 package linketinder.View
 
+import linketinder.Controller.CandidateController
+import linketinder.DAO.CandidateDAO
+
 class CandidateQualifications {
 
-        static menu(def candidate) {
-            println ""
-            println "Ola $candidate.name"
-            println "1 - Ver competencias"
-            println "2 - Alterar competencias"
-            println "0 - Sair"
-            println ""
-            println "Digite o codigo do comando"
-            Scanner input = new Scanner(System.in);
-            String command = input.nextLine();
+    static menu(def user) {
+        println ""
+        println "Ola $user.name"
+        println "1 - Ver competencias"
+        println "2 - Alterar competencias"
+        println "0 - Sair"
+        println ""
+        println "Digite o codigo do comando"
+        Scanner input = new Scanner(System.in);
+        String command = input.nextLine();
+        CandidateController candidateController = new CandidateController(new CandidateDAO())
 
 
-            switch (command) {
-                case "0":
-                    Candidate.menu(candidate)
-                    break
-                case "1":
-                    linketinder.Controller.Candidate.getQualifications(candidate)
-                    goBack(candidate)
-                    break
-                case "2":
-                    println("funcao nao disponivel no momento")
-                    goBack(candidate)
-                    break
-                default:
-                    break
-            }
+        switch (command) {
+            case "0":
+                Candidate.menu(user)
+                break
+            case "1":
+                candidateController.getQualifications(user)
+                goBack(user)
+                break
+            case "2":
+                println("funcao nao disponivel no momento")
+                goBack(user)
+                break
+            default:
+                break
         }
+    }
 
-    static goBack(candidate){
+    static goBack(candidate) {
         System.out.println("");
         System.out.println("________________________________");
         System.out.println("Digite 1 para voltar ao menu");

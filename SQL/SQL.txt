@@ -4,6 +4,7 @@ CREATE TABLE users(
 	email VARCHAR(30) UNIQUE,
 	password VARCHAR(30) NOT NULL,
 	doc BIGINT NOT NULL,
+	zipCode INT NOT NULL,
 	country VARCHAR(15) NOT NULL,
 	state VARCHAR(15) NOT NULL,
 	category VARCHAR(15) NOT NULL
@@ -72,19 +73,19 @@ CREATE TABLE enterprise_likes(
 );
 
 --Criando usuários (5 candidados e 5 empresas)
-INSERT INTO users (name, email, password, doc, country, state,category)
+INSERT INTO users (name, email, password,zipCode, doc, country, state,category)
 VALUES
-	('candidato01','candidato01@gmail.com','candidato01',123456,'brasil','pr', 'candidate'),
-	('candidato02','candidato02@gmail.com','candidato02',654321,'brasil','sp','candidate'),
-	('candidato03','candidato03@gmail.com','candidato03',987654,'brasil','rj','candidate'),
-	('candidato04','candidato04@gmail.com','candidato04',456789,'brasil','go','candidate'),
-	('candidato05','candidato05@gmail.com','candidato05',159482,'brasil','mt','candidate'),
+	('candidato01','candidato01@gmail.com','candidato01',123456,123456,'brasil','pr', 'candidate'),
+	('candidato02','candidato02@gmail.com','candidato02',123456,654321,'brasil','sp','candidate'),
+	('candidato03','candidato03@gmail.com','candidato03',123456,987654,'brasil','rj','candidate'),
+	('candidato04','candidato04@gmail.com','candidato04',123456,456789,'brasil','go','candidate'),
+	('candidato05','candidato05@gmail.com','candidato05',123456,159482,'brasil','mt','candidate'),
 
-	('empresa01','empresao01@gmail.com','empresa01',123456123,'brasil','pr','enterprise'),
-	('empresa02','empresa02@gmail.com','empresa02',654321123,'brasil','sp','enterprise'),
-	('empresa03','empresa03@gmail.com','empresa03',987654123,'brasil','rj','enterprise'),
-	('empresa04','empresa04@gmail.com','empresa04',456789123,'brasil','go','enterprise'),
-	('empresa05','empresa05@gmail.com','empresa05',159482123,'brasil','mt','enterprise');
+	('empresa01','empresao01@gmail.com','empresa01',123456,123456123,'brasil','pr','enterprise'),
+	('empresa02','empresa02@gmail.com','empresa02',123456,654321123,'brasil','sp','enterprise'),
+	('empresa03','empresa03@gmail.com','empresa03',123456,987654123,'brasil','rj','enterprise'),
+	('empresa04','empresa04@gmail.com','empresa04',123456,456789123,'brasil','go','enterprise'),
+	('empresa05','empresa05@gmail.com','empresa05',123456,159482123,'brasil','mt','enterprise');
 
 --Adicionando dados aos candidatos
 INSERT INTO candidates (user_id, age, education)

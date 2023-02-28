@@ -1,28 +1,25 @@
 package linketinder.DAO
 
+import groovy.sql.GroovyRowResult
 import linketinder.Entity.User
 import groovy.sql.Sql
+import linketinder.Utils.DbConnection
 
-class UserDAO {
+class UserDAO implements UserDAOInterface{
 
-    final String url = "jdbc:postgresql://localhost/linketinder"
-    final String user = "postgres"
-    final String password = "179550"
-    final String driver = "org.postgresql.Driver"
-
-    public getUsers() {
-        def sql = Sql.newInstance(url, user, password, driver)
+    void getUsers() {
+        Sql sql = DbConnection.start()
         sql.eachRow("SELECT * FROM users") { row -> println "name: ${row.name} email:${row.email} password:${row.name} doc:${row.doc} country:${row.country} state:${row.state} category:${row.category}"
         }
         sql.close()
 
     }
 
-    public create(User newUser) {
-        def sql = Sql.newInstance(url, user, password, driver)
+    void create(User newUser) {
+        Sql sql = DbConnection.start()
 
         try {
-            def id = sql.executeInsert "INSERT INTO users (name, email, password, doc, country, state, category) VALUES (${newUser.name}, ${newUser.email}, ${newUser.password}, ${newUser.doc}, ${newUser.country}, ${newUser.state},${newUser.category} )"
+            List<List<Object>> id = sql.executeInsert "INSERT INTO users (name, email, password, doc, country, state, category) VALUES (${newUser.name}, ${newUser.email}, ${newUser.password}, ${newUser.doc}, ${newUser.country}, ${newUser.state},${newUser.category} )"
             if (newUser.category == "candidate") {
                 sql.execute "INSERT INTO candidates (user_id) VALUES (${id[0][0]})"
             } else {
@@ -35,11 +32,11 @@ class UserDAO {
         }
     }
 
-    public deleteUser(int id, String type) {
-        def sql = Sql.newInstance(url, user, password, driver)
+    void deleteUser(int id, String category) {
+        Sql sql = DbConnection.start()
 
         try {
-            if (type == "candidato") {
+            if (category == "candidato") {
                 sql.execute "DELETE FROM candidates WHERE user_id=${id}"
             } else {
                 sql.execute "DELETE FROM enterprises WHERE user_id=${id}"
@@ -52,14 +49,12 @@ class UserDAO {
         }
     }
 
-    public getUserInfo(String name) {
-        def sql = Sql.newInstance(url, user, password, driver)
-        def user = sql.firstRow("SELECT * FROM users WHERE name=${name}")
+    User getUserInfo(String name) {
+        Sql sql = DbConnection.start()
+        GroovyRowResult result = sql.firstRow("SELECT * FROM users WHERE name=${name}")
+        User user = new User(id: result.id as int, name: result.name, email: result.email, country: result.country, password: result.password, zipCode: result.zipCode as int, doc: result.doc as BigInteger, state: result.state, category: result.category )
         sql.close()
         return user
     }
-
-
-
 
 }

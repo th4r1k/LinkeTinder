@@ -1,5 +1,9 @@
 package linketinder.View
 
+import linketinder.Controller.CandidateController
+import linketinder.Controller.EnterpriseController
+import linketinder.DAO.CandidateDAO
+
 class NewUser {
 
     static void menu() {
@@ -12,16 +16,17 @@ class NewUser {
         println "Digite o codigo do comando"
         Scanner input = new Scanner(System.in);
         String command = input.nextLine();
+        CandidateController candidateController = new CandidateController(new CandidateDAO())
 
         switch (command) {
             case "0":
                 Menu.start()
                 break
             case "1":
-                linketinder.Controller.Candidate.create()
+                candidateController.create()
                 break
             case "2":
-                linketinder.Controller.Enterprise.create()
+                EnterpriseController.create()
                 break
             default:
                 break

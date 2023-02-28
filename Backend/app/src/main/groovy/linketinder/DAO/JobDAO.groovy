@@ -1,17 +1,14 @@
 package linketinder.DAO
 
+import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
+import linketinder.Utils.DbConnection
 
 class JobDAO {
 
-    final String url = "jdbc:postgresql://localhost/linketinder"
-    final String user = "postgres"
-    final String password = "179550"
-    final String driver = "org.postgresql.Driver"
-
-    public list() {
-        def sql = Sql.newInstance(url, user, password, driver)
-        def list = sql.rows("SELECT * FROM jobs")
+    def list() {
+        Sql sql = DbConnection.start()
+        List<GroovyRowResult> list = sql.rows("SELECT * FROM jobs")
 
         sql.close()
         return list

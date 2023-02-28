@@ -1,13 +1,14 @@
 package linketinder.View
 
+import linketinder.Controller.CandidateController
+import linketinder.DAO.CandidateDAO
+
 class Candidate {
 
-    static menu(def candidate) {
-
-
+    static menu(def user) {
 
         println ""
-        println "Ola $candidate.name"
+        println "Ola $user.name"
         println "1 - Ver oportunidades"
         println "2 - ver matches"
         println "3 - Minhas competencias"
@@ -16,6 +17,7 @@ class Candidate {
         println "Digite o codigo do comando"
         Scanner input = new Scanner(System.in);
         String command = input.nextLine();
+        CandidateController candidateController = new CandidateController(new CandidateDAO())
 
 
         switch (command) {
@@ -23,13 +25,13 @@ class Candidate {
                 Menu.start()
                 break
             case "1":
-                linketinder.Controller.Candidate.getOpportunities(candidate)
+                candidateController.getOpportunities(user)
                 break
             case "2":
-                linketinder.Controller.Candidate.match(candidate)
+                candidateController.match(user)
                 break
             case "3":
-                CandidateQualifications.menu(candidate)
+                CandidateQualifications.menu(user)
                 break
             default:
                 break

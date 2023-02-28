@@ -1,10 +1,12 @@
 package linketinder.View
 
+import linketinder.Controller.EnterpriseController
+
 class Enterprise {
 
-    static menu(def enterprise) {
+    static menu(def user) {
         println ""
-        println "Ola $enterprise.name"
+        println "Ola $user.name"
         println "1 - Ver candidatos"
         println "2 - ver matches"
         println "0 - Sair"
@@ -18,10 +20,10 @@ class Enterprise {
                 Menu.start()
                 break
             case "1":
-                linketinder.Controller.Enterprise.getOpportunities(enterprise)
+                EnterpriseController.getOpportunities(user)
                 break
             case "2":
-                linketinder.Controller.Enterprise.match(enterprise)
+                EnterpriseController.match(user)
                 break
             default:
                 break
