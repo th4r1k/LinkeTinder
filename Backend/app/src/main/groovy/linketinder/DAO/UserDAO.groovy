@@ -19,7 +19,7 @@ class UserDAO implements UserDAOInterface{
         Sql sql = DbConnection.start()
 
         try {
-            List<List<Object>> id = sql.executeInsert "INSERT INTO users (name, email, password, doc, country, state, category) VALUES (${newUser.name}, ${newUser.email}, ${newUser.password}, ${newUser.doc}, ${newUser.country}, ${newUser.state},${newUser.category} )"
+            List<List<Object>> id = sql.executeInsert "INSERT INTO users (name, email, password, doc, zipcode, country, state, category) VALUES (${newUser.name}, ${newUser.email}, ${newUser.password}, ${newUser.zipCode}, ${newUser.doc}, ${newUser.country}, ${newUser.state},${newUser.category} )"
             if (newUser.category == "candidate") {
                 sql.execute "INSERT INTO candidates (user_id) VALUES (${id[0][0]})"
             } else {
