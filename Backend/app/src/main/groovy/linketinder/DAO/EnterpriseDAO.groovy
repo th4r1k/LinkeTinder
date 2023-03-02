@@ -1,52 +1,53 @@
 package linketinder.DAO
 
+import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
+import linketinder.Entity.User
+import linketinder.Utils.DbConnection
 
-class EnterpriseDAO {
+class EnterpriseDAO implements EnterpriseDAOInterface{
 
-    final String url = "jdbc:postgresql://localhost/linketinder"
-    final String user = "postgres"
-    final String password = "179550"
-    final String driver = "org.postgresql.Driver"
 
-    public printAll() {
-        def sql = Sql.newInstance(url, user, password, driver)
-        sql.eachRow("SELECT * FROM users WHERE category='enterprise'") { row -> println "name: ${row.name} email:${row.email} password:${row.name} doc:${row.doc} country:${row.country} state:${row.state} category:${row.category}"
+    void printAll() {
+        Sql sql = DbConnection.start()
+        sql.eachRow("SELECT * FROM users WHERE category='enterprise'") { user -> println "name: ${user.name} email:${user.email} password:${user.name} doc:${user.doc} country:${user.country} state:${user.state} category:${user.category}"
         }
         sql.close()
     }
 
-    public list() {
-        def sql = Sql.newInstance(url, user, password, driver)
-        def list = sql.rows("SELECT * FROM users WHERE category='enterprise'")
+    List<User> list() {
+        Sql sql = DbConnection.start()
+        List<User> list = sql.rows("SELECT * FROM users WHERE category='enterprise'") as List<User>
         sql.close()
         return list
     }
 
-    public like(int enterpriseId, int candidateId) {
-        def sql = Sql.newInstance(url, user, password, driver)
+    void like(int enterpriseId, int candidateId) {
+        Sql sql = DbConnection.start()
 
         try {
             sql.executeInsert "INSERT INTO enterprise_likes (enterprise_id, candidate_id) VALUES (${enterpriseId}, ${candidateId})"
-
         } catch (Exception e) {
-
             println e.printStackTrace()
         } finally {
             sql.close()
         }
     }
 
-    public getId(int userId){
-        def sql = Sql.newInstance(url, user, password, driver)
-        def id = sql.firstRow("SELECT id FROM enterprises WHERE user_id=${userId}")
+    int getId(int userId){
+        Sql sql = DbConnection.start()
+        GroovyRowResult enterpriseObject = sql.firstRow("SELECT id FROM enterprises WHERE user_id=${userId}")
         sql.close()
-        return id
+        return enterpriseObject.id as int
     }
 
-    public match(){
-        def sql = Sql.newInstance(url, user, password, driver)
-        def list = sql.rows("SELECT enterprise_likes.candidate_id, enterprise_likes.enterprise_id, candidate_likes.candidate_id, candidate_likes.job_id, users.name, users.email from enterprise_likes, candidate_likes, users where enterprise_likes.candidate_id = candidate_likes.candidate_id AND enterprise_likes.enterprise_id in (SELECT enterprise_id from jobs where id = candidate_likes.job_id ) AND users.id in (SELECT candidates.user_id from candidates where candidates.id = enterprise_likes.candidate_id)")
+    def match(){
+        Sql sql = DbConnection.start()
+        List<GroovyRowResult> list = sql.rows('''SELECT enterprise_likes.candidate_id, enterprise_likes.enterprise_id, candidate_likes.candidate_id, candidate_likes.job_id, users.name, users.email 
+FROM enterprise_likes, candidate_likes, users 
+WHERE enterprise_likes.candidate_id = candidate_likes.candidate_id 
+AND enterprise_likes.enterprise_id IN (SELECT enterprise_id FROM jobs WHERE id = candidate_likes.job_id ) 
+AND users.id IN (SELECT candidates.user_id FROM candidates WHERE candidates.id = enterprise_likes.candidate_id)''')
 
         sql.close()
         return list
