@@ -5,26 +5,29 @@ import linketinder.Entity.User
 import groovy.sql.Sql
 import linketinder.Utils.DbConnection
 
-class UserDAO implements UserDAOInterface{
+class UserDAO implements UserDAOInterface {
 
     void getUsers() {
         Sql sql = DbConnection.start()
         sql.eachRow("SELECT * FROM users") { row -> println "name: ${row.name} email:${row.email} password:${row.name} doc:${row.doc} country:${row.country} state:${row.state} category:${row.category}"
         }
         sql.close()
-
     }
 
-    void create(User newUser) {
+    User create(User newUser) {
         Sql sql = DbConnection.start()
 
         try {
-            List<List<Object>> id = sql.executeInsert "INSERT INTO users (name, email, password, doc, zipcode, country, state, category) VALUES (${newUser.name}, ${newUser.email}, ${newUser.password}, ${newUser.zipCode}, ${newUser.doc}, ${newUser.country}, ${newUser.state},${newUser.category} )"
+            List<List<User>> user = sql.executeInsert("INSERT INTO users (name, email, country, state, password, category, doc, zipcode) VALUES (${newUser.name}, ${newUser.email}, ${newUser.country}, ${newUser.state}, ${newUser.password}, ${newUser.category}, ${newUser.doc}, ${newUser.zipCode})") as List<List<User>>
+            int userId = user[0][0] as int
             if (newUser.category == "candidate") {
-                sql.execute "INSERT INTO candidates (user_id) VALUES (${id[0][0]})"
+                sql.executeInsert "INSERT INTO candidates (user_id) VALUES (${userId})"
             } else {
-                sql.execute "INSERT INTO enterprises (user_id) VALUES (${id[0][0]})"
+                sql.executeInsert "INSERT INTO enterprises (user_id) VALUES (${userId})"
             }
+            User userObject = new User(id:userId, name:user[0][1], email: user[0][2], password: user[0][3], doc:user[0][4] as BigInteger, zipCode: user[0][5] as int, country: user[0][6], state: user[0][7], category: user[0][8]   )
+
+            return userObject
         } catch (Exception e) {
             println e.printStackTrace()
         } finally {
@@ -52,7 +55,7 @@ class UserDAO implements UserDAOInterface{
     User getUserInfo(String name) {
         Sql sql = DbConnection.start()
         GroovyRowResult result = sql.firstRow("SELECT * FROM users WHERE name=${name}")
-        User user = new User(id: result.id as int, name: result.name, email: result.email, country: result.country, password: result.password, zipCode: result.zipCode as int, doc: result.doc as BigInteger, state: result.state, category: result.category )
+        User user = new User(id: result.id as int, name: result.name, email: result.email, country: result.country, password: result.password, zipCode: result.zipCode as int, doc: result.doc as BigInteger, state: result.state, category: result.category)
         sql.close()
         return user
     }

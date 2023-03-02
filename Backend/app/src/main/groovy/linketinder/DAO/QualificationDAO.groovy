@@ -1,6 +1,7 @@
 package linketinder.DAO
 
 import groovy.sql.Sql
+import linketinder.Entity.Job
 import linketinder.Entity.User
 import linketinder.Utils.DbConnection
 
@@ -8,7 +9,7 @@ class QualificationDAO {
 
     void getQualifications() {
         Sql sql = DbConnection.start()
-        sql.eachRow("SELECT * FROM qualifications") { row -> println "name: ${row.name}"
+        sql.eachRow("SELECT * FROM qualifications") { qualification -> println "name: ${qualification.name}"
         }
         sql.close()
     }
@@ -41,14 +42,14 @@ class QualificationDAO {
         }
     }
 
-    void candidateQualifications(def user) {
+    void candidateQualifications(User user) {
         Sql sql = DbConnection.start()
         print(sql.firstRow("SELECT education FROM candidates WHERE user_id=${user.id}"))
         println( sql.rows("SELECT skill FROM candidates, candidate_qualifications, qualifications where candidates.id=candidate_qualifications.candidate_id  AND candidate_qualifications.qualification_id = qualifications.id AND candidates.user_id=${user.id}"))
         sql.close()
     }
 
-    void jobQualifications(def job) {
+    void jobQualifications(Job job) {
         Sql sql = DbConnection.start()
         println(job.description + sql.rows("SELECT DISTINCT skill FROM jobs, job_qualifications, qualifications WHERE jobs.id=job_qualifications.job_id AND  job_qualifications.qualification_id = qualifications.id AND jobs.id=${job.id}"))
         sql.close()

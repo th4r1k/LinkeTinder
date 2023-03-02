@@ -2,10 +2,12 @@ package linketinder.View
 
 import linketinder.Controller.CandidateController
 import linketinder.DAO.CandidateDAO
+import linketinder.DAO.UserDAO
+import linketinder.Entity.User
 
-class CandidateQualifications {
+class CandidateQualificationsView {
 
-    static menu(def user) {
+    static menu(User user) {
         println ""
         println "Ola $user.name"
         println "1 - Ver competencias"
@@ -15,12 +17,12 @@ class CandidateQualifications {
         println "Digite o codigo do comando"
         Scanner input = new Scanner(System.in);
         String command = input.nextLine();
-        CandidateController candidateController = new CandidateController(new CandidateDAO())
+        CandidateController candidateController = new CandidateController(new CandidateDAO(), new UserDAO())
 
 
         switch (command) {
             case "0":
-                Candidate.menu(user)
+                CandidateView.menu(user)
                 break
             case "1":
                 candidateController.getQualifications(user)
@@ -35,7 +37,7 @@ class CandidateQualifications {
         }
     }
 
-    static goBack(candidate) {
+    static goBack(User candidate) {
         System.out.println("");
         System.out.println("________________________________");
         System.out.println("Digite 1 para voltar ao menu");
@@ -46,7 +48,6 @@ class CandidateQualifications {
             case "1":
                 menu(candidate)
                 break;
-
             default:
                 input.close();
                 break;

@@ -6,6 +6,8 @@ class Regex {
     static final String email = /[\w-\.]+@([\w-]+\.)+[\w-]{2,4}/
     static final String country = /[A-z]{4,15}/
     static final String state = /[A-z]{2,15}/
-    static final String zipCode = /^[0-9]{5}-?[0-9]{3}$/
+    static final String zipCode = /[0-9]{5}-?[0-9]{3}/
     static final String age = /[0-9]{1,2}/
+    static final String options = /[01]/
+    static final String optionYes = /1/
 }

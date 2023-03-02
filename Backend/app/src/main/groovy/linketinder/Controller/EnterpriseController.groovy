@@ -2,74 +2,36 @@ package linketinder.Controller
 
 import groovy.sql.GroovyRowResult
 import linketinder.DAO.CandidateDAO
-import linketinder.DAO.EnterpriseDAO
-import linketinder.DAO.QualificationDAO
-import linketinder.DAO.UserDAO
+import linketinder.DAO.EnterpriseDAOInterface
+import linketinder.DAO.UserDAOInterface
 import linketinder.Entity.User
-import linketinder.Utils.NewUser
-import linketinder.View.Menu
 
 class EnterpriseController {
 
-    static create() {
-        User newEnterprise = NewUser.enterpriseForm()
-        UserDAO db= new UserDAO()
-        db.create(newEnterprise)
+    EnterpriseDAOInterface enterpriseDAO
+    UserDAOInterface userDAO
 
-        println "Empresa cadastrada com sucesso"
-        Menu.start()
-
+    EnterpriseController(EnterpriseDAOInterface enterpriseDAO, UserDAOInterface userDAO) {
+        this.enterpriseDAO = enterpriseDAO
+        this.userDAO = userDAO
     }
 
-    static get() {
-        EnterpriseDAO dbEnteprise = new EnterpriseDAO()
-
-        println ""
-        println "Lista empresas:"
-        dbEnteprise.printAll()
-        Scanner input = new Scanner(System.in)
-        println("Digite 0 para voltar")
-        def cmd = input.nextLine()
-
-        if (cmd) {
-            Menu.start()
-        }
+    User create(User newEnterprise) {
+        userDAO.create(newEnterprise)
     }
 
-    static getOpportunities(User user) {
-        EnterpriseDAO dbEnterprise = new EnterpriseDAO()
+    void getAllEnterprises() {
+        enterpriseDAO.printAll()
+    }
+
+    List<User> getOpportunities() {
         CandidateDAO dbCandidate = new CandidateDAO()
-        QualificationDAO dbQualification = new QualificationDAO()
-
-
-        int id = dbEnterprise.getId(user.id)
-
-        List<GroovyRowResult> candidates = dbCandidate.list()
-        candidates.forEach {
-            dbQualification.candidateQualifications(it)
-            Scanner input = new Scanner(System.in)
-            println "0 - Like"
-            println "1 - Proximo"
-            String cmd = input.nextLine()
-            if (cmd == "0") {
-                dbEnterprise.like(id, it.id as int)
-                println("curtiu o candidato")
-            }
-        }
-        println("Nao ha mais usuarios")
-        linketinder.View.Enterprise.menu(user)
+        List<User> candidates = dbCandidate.list()
+        return candidates
     }
 
-    static match(User user) {
-        EnterpriseDAO dbEnterprise = new EnterpriseDAO()
-
-        int id = dbEnterprise.getId(user.id)
-        List<GroovyRowResult> matches = dbEnterprise.match()
-        matches.forEach {
-
-            if (id == it.enterprise_id)
-                println("Match com o usuario ${it.name} entrar em contato pelo email ${it.email}")
-        }
-        linketinder.View.Enterprise.menu(user)
+    def match() {
+        List<GroovyRowResult> matches = enterpriseDAO.match()
+        return matches
     }
 }
