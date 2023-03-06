@@ -2,8 +2,8 @@
 
 # Backend
 
-A simple Groovy program, without persistance.
-It start's with 5 candidates and 5 enterprise, its possible to create more. Login with the user, see opportunities and like, if the like is reciprocal its a match and important information is now avaible.
+A simple Groovy program, with PostgreSql persistance.
+It start's with 5 candidates, 5 enterprise, 6 jobs opportunities, its possible to create more Users(Candidates/Enterprises).Login with a user, see opportunities and like, if the like is reciprocal its a match and important information is now avaible.
 
 ## Features
 
@@ -16,20 +16,34 @@ It start's with 5 candidates and 5 enterprise, its possible to create more. Logi
 
 ### Requisites
 
-Java 8+
+  - Java 8+;
+  - Groovy 3+;
+  - PostgreSql;
+  - Gradle.
 
 ### Installing
 
 Clone or download files
 
+Configure PostgreSql or change configuration in:
+
+    (line 7-10) /Backend/app/src/main/groovy/linketinder/DAO/CandidateDAO.groovy
+
+After configured database, paste all code in a query from:
+
+    SQL/SQL.txt
+
 Inside the Backend path run:
 
-    javac -jar LinkeTinder.jar
+    gradle run
 
 
 ## Built With
 
-  - Groovy
+  - Java 19.0.1;
+  - Groovy 4.0.7;
+  - PostgreSql 15;
+  - Gradle 7.6.
 
 
 # Frontend
