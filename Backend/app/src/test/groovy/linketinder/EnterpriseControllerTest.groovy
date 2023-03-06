@@ -4,7 +4,7 @@ import groovy.test.GroovyTestCase
 import linketinder.Controller.EnterpriseController
 import linketinder.DAO.EnterpriseDAO
 import linketinder.DAO.UserDAO
-import linketinder.DAO.UserDAOInterface
+import linketinder.DAO.Interfaces.UserDAOInterface
 import linketinder.Entity.User
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test

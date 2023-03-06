@@ -1,4 +1,4 @@
-package linketinder.DAO
+package linketinder.DAO.Interfaces
 
 import linketinder.Entity.User
 

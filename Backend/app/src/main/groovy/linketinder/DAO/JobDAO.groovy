@@ -1,14 +1,18 @@
 package linketinder.DAO
 
-import groovy.sql.GroovyRowResult
+
 import groovy.sql.Sql
 import linketinder.Entity.Job
-import linketinder.Utils.DbConnection
+import linketinder.Utils.DbConnection.DbConnectionFactory
+import linketinder.Utils.DbConnection.IDbConnectionFactory
 
 class JobDAO {
 
+    IDbConnectionFactory DbFactory = DbConnectionFactory.createConnectionFactory("Postgres")
+
+
     List<Job> list() {
-        Sql sql = DbConnection.start()
+        Sql sql = DbFactory.start()
         List<Job> jobs = sql.rows("SELECT * FROM jobs") as List<Job>
 
         sql.close()
