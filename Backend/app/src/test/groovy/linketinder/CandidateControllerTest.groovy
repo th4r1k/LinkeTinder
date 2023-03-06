@@ -3,7 +3,7 @@ package linketinder
 import linketinder.Controller.CandidateController
 import linketinder.DAO.CandidateDAO
 import linketinder.DAO.UserDAO
-import linketinder.DAO.UserDAOInterface
+import linketinder.DAO.Interfaces.UserDAOInterface
 import linketinder.Entity.User
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test

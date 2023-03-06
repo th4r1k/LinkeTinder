@@ -1,9 +1,9 @@
 package linketinder.Controller
 
-import linketinder.DAO.CandidateDAOInterface
+import linketinder.DAO.Interfaces.CandidateDAOInterface
 import linketinder.DAO.JobDAO
 import linketinder.DAO.QualificationDAO
-import linketinder.DAO.UserDAOInterface
+import linketinder.DAO.Interfaces.UserDAOInterface
 import linketinder.Entity.CandidateMatch
 import linketinder.Entity.Job
 import linketinder.Entity.User

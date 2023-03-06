@@ -2,8 +2,8 @@ package linketinder.Controller
 
 import groovy.sql.GroovyRowResult
 import linketinder.DAO.CandidateDAO
-import linketinder.DAO.EnterpriseDAOInterface
-import linketinder.DAO.UserDAOInterface
+import linketinder.DAO.Interfaces.EnterpriseDAOInterface
+import linketinder.DAO.Interfaces.UserDAOInterface
 import linketinder.Entity.User
 
 class EnterpriseController {
