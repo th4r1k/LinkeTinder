@@ -2,10 +2,10 @@ package linketinder
 
 import groovy.test.GroovyTestCase
 import linketinder.Controller.EnterpriseController
-import linketinder.DAO.EnterpriseDAO
-import linketinder.DAO.UserDAO
-import linketinder.DAO.Interfaces.UserDAOInterface
-import linketinder.Entity.User
+import linketinder.Model.DAO.EnterpriseDAO
+import linketinder.Model.DAO.UserDAO
+import linketinder.Model.DAO.Interfaces.UserDAOInterface
+import linketinder.Model.Entity.User
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 

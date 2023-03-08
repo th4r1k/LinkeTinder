@@ -1,6 +1,6 @@
-package linketinder.DAO.Interfaces
+package linketinder.Model.DAO.Interfaces
 
-import linketinder.Entity.User
+import linketinder.Model.Entity.User
 
 interface UserDAOInterface {
     void getUsers()

@@ -1,10 +1,10 @@
-package linketinder.Entity
+package linketinder.Model.Entity
 
 import groovy.transform.Canonical
 
 @Canonical
-class Job {
+class EnterpriseLike {
     int id
     int enterprise_id
-    String description
+    int candidate_id
 }

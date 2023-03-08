@@ -1,4 +1,4 @@
-package linketinder.Entity
+package linketinder.Model.Entity
 
 import groovy.transform.Canonical
 

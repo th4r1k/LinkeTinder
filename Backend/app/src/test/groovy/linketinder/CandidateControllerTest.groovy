@@ -1,10 +1,10 @@
 package linketinder
 
 import linketinder.Controller.CandidateController
-import linketinder.DAO.CandidateDAO
-import linketinder.DAO.UserDAO
-import linketinder.DAO.Interfaces.UserDAOInterface
-import linketinder.Entity.User
+import linketinder.Model.DAO.CandidateDAO
+import linketinder.Model.DAO.UserDAO
+import linketinder.Model.DAO.Interfaces.UserDAOInterface
+import linketinder.Model.Entity.User
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import static org.mockito.Mockito.*
