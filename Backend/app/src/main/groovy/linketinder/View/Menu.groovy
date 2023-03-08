@@ -3,15 +3,47 @@ package linketinder.View
 import linketinder.Controller.CandidateController
 import linketinder.Controller.EnterpriseController
 import linketinder.Controller.UserController
-import linketinder.DAO.CandidateDAO
-import linketinder.DAO.EnterpriseDAO
-import linketinder.DAO.UserDAO
-import linketinder.Entity.User
+import linketinder.Model.DAO.CandidateDAO
+import linketinder.Model.DAO.EnterpriseDAO
+import linketinder.Model.DAO.UserDAO
+import linketinder.Model.Entity.User
 
 class Menu {
 
     static start() {
+        UserController userController = new UserController(new UserDAO(), new CandidateController(new CandidateDAO(), new UserDAO()))
+        EnterpriseController enterpriseController = new EnterpriseController(new EnterpriseDAO(), new UserDAO())
+        Scanner input = new Scanner(System.in)
+        boolean quit = false
 
+        showMenu()
+
+        while (!quit) {
+            String command = input.nextLine()
+
+            switch (command) {
+                case "0":
+                    quit = true
+                    break
+                case "1":
+                    NewUserView.menu()
+                    break
+                case "2":
+                    login(userController)
+                    break
+                case "3":
+                    printAllCandidates(userController)
+                    break
+                case "4":
+                    printAllEnterprises(enterpriseController)
+                    break
+                default:
+                    break
+            }
+        }
+    }
+
+    static showMenu() {
         println ""
         println "Bem vindo ao LinkeTinder"
         println "1 - Criar novo usuario"
@@ -21,34 +53,12 @@ class Menu {
         println "0 - Sair"
         println ""
         println "Digite o codigo do comando"
-        Scanner input = new Scanner(System.in)
-        String command = input.nextLine()
-        UserController userController = new UserController(new UserDAO(), new CandidateController(new CandidateDAO(), new UserDAO()))
-        EnterpriseController enterpriseController = new EnterpriseController(new EnterpriseDAO(), new UserDAO())
-
-        switch (command) {
-            case "0":
-                break
-            case "1":
-                NewUserView.menu()
-                break
-            case "2":
-                login(userController)
-                break
-            case "3":
-                printAllCandidates(userController)
-                break
-            case "4":
-                printAllEnterprises(enterpriseController)
-                break
-            default:
-                break
-        }
     }
 
     static login(UserController userController) {
-        println "Digite o nome de usuario para fazer login:"
         Scanner input = new Scanner(System.in)
+
+        println "Digite o nome de usuario para fazer login:"
         String name = input.nextLine()
         User user = userController.login(name)
         if (user) {
@@ -66,7 +76,7 @@ class Menu {
     }
 
     static checkCandidateEducation(UserController userController, User user, String education) {
-        int id = userController.candidateController.candidateDAO.getId(user.id)
+        int id = userController.candidateController.getId(user.id)
         if (education) {
             CandidateView.menu(user)
         } else {
@@ -85,11 +95,11 @@ class Menu {
         String cmd = input.nextLine()
 
         if (cmd) {
-            start()
+            showMenu()
         }
     }
 
-    static printAllEnterprises(EnterpriseController enterpriseController){
+    static printAllEnterprises(EnterpriseController enterpriseController) {
         Scanner input = new Scanner(System.in)
         println ""
         println "Lista empresas:"
@@ -98,7 +108,7 @@ class Menu {
         String cmd = input.nextLine()
 
         if (cmd) {
-            start()
+            showMenu()
         }
     }
 

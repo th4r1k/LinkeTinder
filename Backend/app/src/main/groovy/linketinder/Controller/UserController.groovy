@@ -1,7 +1,7 @@
 package linketinder.Controller
 
-import linketinder.DAO.UserDAOInterface
-import linketinder.Entity.User
+import linketinder.Model.DAO.Interfaces.UserDAOInterface
+import linketinder.Model.Entity.User
 
 class UserController {
 

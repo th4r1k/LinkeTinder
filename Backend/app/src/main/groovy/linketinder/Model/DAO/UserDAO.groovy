@@ -1,22 +1,25 @@
-package linketinder.DAO
+package linketinder.Model.DAO
 
 import groovy.sql.GroovyRowResult
-import linketinder.Entity.User
+import linketinder.Model.DAO.Interfaces.UserDAOInterface
+import linketinder.Model.Entity.User
 import groovy.sql.Sql
-import linketinder.Utils.DbConnection
+import linketinder.Utils.DbConnection.DbConnectionFactory
+import linketinder.Utils.DbConnection.IDbConnectionFactory
 
 class UserDAO implements UserDAOInterface {
 
+    IDbConnectionFactory DbFactory = DbConnectionFactory.createConnectionFactory("Postgres")
+
     void getUsers() {
-        Sql sql = DbConnection.start()
+        Sql sql = DbFactory.start()
         sql.eachRow("SELECT * FROM users") { row -> println "name: ${row.name} email:${row.email} password:${row.name} doc:${row.doc} country:${row.country} state:${row.state} category:${row.category}"
         }
         sql.close()
     }
 
     User create(User newUser) {
-        Sql sql = DbConnection.start()
-
+        Sql sql = DbFactory.start()
         try {
             List<List<User>> user = sql.executeInsert("INSERT INTO users (name, email, country, state, password, category, doc, zipcode) VALUES (${newUser.name}, ${newUser.email}, ${newUser.country}, ${newUser.state}, ${newUser.password}, ${newUser.category}, ${newUser.doc}, ${newUser.zipCode})") as List<List<User>>
             int userId = user[0][0] as int
@@ -36,8 +39,7 @@ class UserDAO implements UserDAOInterface {
     }
 
     void deleteUser(int id, String category) {
-        Sql sql = DbConnection.start()
-
+        Sql sql = DbFactory.start()
         try {
             if (category == "candidato") {
                 sql.execute "DELETE FROM candidates WHERE user_id=${id}"
@@ -53,7 +55,7 @@ class UserDAO implements UserDAOInterface {
     }
 
     User getUserInfo(String name) {
-        Sql sql = DbConnection.start()
+        Sql sql = DbFactory.start()
         GroovyRowResult result = sql.firstRow("SELECT * FROM users WHERE name=${name}")
         User user = new User(id: result.id as int, name: result.name, email: result.email, country: result.country, password: result.password, zipCode: result.zipCode as int, doc: result.doc as BigInteger, state: result.state, category: result.category)
         sql.close()

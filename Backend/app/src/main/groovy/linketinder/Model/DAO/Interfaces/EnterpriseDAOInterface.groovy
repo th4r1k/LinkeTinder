@@ -1,4 +1,4 @@
-package linketinder.DAO
+package linketinder.Model.DAO.Interfaces
 
 interface EnterpriseDAOInterface {
     void printAll()

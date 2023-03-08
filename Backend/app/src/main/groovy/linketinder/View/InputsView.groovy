@@ -1,6 +1,8 @@
-package linketinder.Utils
+package linketinder.View
 
-class Sanitize {
+import linketinder.Utils.Regex
+
+class InputsView {
 
     static String validateUser(Scanner input) {
         println "Digite o nome"
