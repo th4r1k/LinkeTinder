@@ -23,7 +23,38 @@ class JobView {
         JobQualificationController jobQualificationController = new JobQualificationController(new JobQualificationDAO())
         int enterprise_id = enterpriseController.getId(user.id)
         Scanner input = new Scanner(System.in)
+        boolean quit = false
+        showJobMenu()
 
+        while (!quit) {
+            String command = input.nextLine()
+
+            switch (command) {
+                case "0":
+                    Menu.showMenu()
+                    break
+                case "1":
+                    println("Digite a descricao para o job")
+                    String jobDescription = input.nextLine()
+                    Job newJob = new Job(description: jobDescription, enterprise_id: enterprise_id)
+                    List<List<Job>> job = jobController.createJob(newJob)
+                    addJobQualification(jobQualificationController, job[0][0] as int)
+                    showJobMenu()
+                    break
+                case "2":
+                    List<Job> jobs = jobController.listEnterpriseJobs(enterprise_id)
+                    jobs.forEach {
+                        jobQualificationController.getJobDescription(it as Job)
+                    }
+                    goBack(user)
+                    break
+                default:
+                    break
+            }
+        }
+    }
+
+    static showJobMenu() {
         println ""
         println "1 - Cadastrar job"
         println "2 - Ver jobs"
@@ -32,31 +63,6 @@ class JobView {
         println "0 - Sair"
         println ""
         println "Digite o codigo do comando"
-        String command = input.nextLine()
-
-        switch (command) {
-            case "0":
-                Menu.start()
-                break
-            case "1":
-                println("Digite a descricao para o job")
-                String jobDescription = input.nextLine()
-                Job newJob = new Job(description: jobDescription, enterprise_id: enterprise_id)
-                List<List<Job>> job =jobController.createJob(newJob)
-                addJobQualification(jobQualificationController, job[0][0] as int)
-                println(job)
-                menu(user)
-                break
-            case "2":
-                List<Job> jobs = jobController.listEnterpriseJobs(enterprise_id)
-                jobs.forEach {
-                    jobQualificationController.getJobDescription(it as Job)
-                }
-                goBack(user)
-                break
-            default:
-                break
-        }
     }
 
     static goBack(User user) {
@@ -68,7 +74,7 @@ class JobView {
 
         switch (data) {
             case "1":
-                menu(user)
+                showJobMenu()
                 break
             default:
                 input.close()
@@ -76,10 +82,10 @@ class JobView {
         }
     }
 
-    static String needJava(Scanner input){
+    static String needJava(Scanner input) {
         println("Vaga precisa de conhecimento em JAVA? (0-NAO/1-SIM)")
         String java = input.nextLine()
-        while(!(java ==~ Regex.options)){
+        while (!(java ==~ Regex.options)) {
             println("Vaga precisa de conhecimento em JAVA? (0-NAO/1-SIM)")
             java = input.nextLine()
         }
@@ -89,7 +95,7 @@ class JobView {
     static String needGroovy(Scanner input) {
         println("Vaga precisa de conhecimento em Groovy? (0-NAO/1-SIM)")
         String groovy = input.nextLine()
-        while(!(groovy ==~ Regex.options)){
+        while (!(groovy ==~ Regex.options)) {
             println("Vaga precisa de conhecimento em Groovy? (0-NAO/1-SIM)")
             groovy = input.nextLine()
         }
@@ -99,7 +105,7 @@ class JobView {
     static String needJavascript(Scanner input) {
         println("Vaga precisa de conhecimento em Javascript? (0-NAO/1-SIM)")
         String javascript = input.nextLine()
-        while(!(javascript ==~ Regex.options)){
+        while (!(javascript ==~ Regex.options)) {
             println("Vaga precisa de conhecimento em Javascript? (0-NAO/1-SIM)")
             javascript = input.nextLine()
         }
@@ -109,39 +115,39 @@ class JobView {
     static String needPhyton(Scanner input) {
         println("Vaga precisa de conhecimento em Phyton? (0-NAO/1-SIM)")
         String phyton = input.nextLine()
-        while(!(phyton ==~ Regex.options)){
+        while (!(phyton ==~ Regex.options)) {
             println("Vaga precisa de conhecimento em Phyton? (0-NAO/1-SIM)")
             phyton = input.nextLine()
         }
         return phyton
     }
 
-    static void addJobQualification(JobQualificationController jobQualificationController, int job_id){
+    static void addJobQualification(JobQualificationController jobQualificationController, int job_id) {
         int JAVA_ID = 1
         int GROOVY_ID = 2
         int JAVASCRIPT_ID = 3
         int PHYTON_ID = 4
         Scanner input = new Scanner(System.in)
         String java = needJava(input)
-        if(java ==~ Regex.optionYes){
+        if (java ==~ Regex.optionYes) {
             JobQualification jobQualification = new JobQualification(job_id: job_id, qualification_id: JAVA_ID)
             jobQualificationController.addJobQualification(jobQualification)
         }
 
         String groovy = needGroovy(input)
-        if(groovy ==~ Regex.optionYes){
+        if (groovy ==~ Regex.optionYes) {
             JobQualification jobQualification = new JobQualification(job_id: job_id, qualification_id: GROOVY_ID)
             jobQualificationController.addJobQualification(jobQualification)
         }
 
         String javascript = needJavascript(input)
-        if(javascript ==~ Regex.optionYes){
+        if (javascript ==~ Regex.optionYes) {
             JobQualification jobQualification = new JobQualification(job_id: job_id, qualification_id: JAVASCRIPT_ID)
             jobQualificationController.addJobQualification(jobQualification)
         }
 
         String phyton = needPhyton(input)
-        if(phyton ==~ Regex.optionYes){
+        if (phyton ==~ Regex.optionYes) {
             JobQualification jobQualification = new JobQualification(job_id: job_id, qualification_id: PHYTON_ID)
             jobQualificationController.addJobQualification(jobQualification)
         }

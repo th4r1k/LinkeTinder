@@ -24,7 +24,7 @@ class NewUserView {
 
         switch (command) {
             case "0":
-                Menu.start()
+                Menu.showMenu()
                 break
             case "1":
                 createNewCandidate(candidateController)
@@ -41,7 +41,7 @@ class NewUserView {
         User newCandidate = FormsView.registrationForm("candidate")
         if (candidateController.create(newCandidate)) {
             println "Candidato cadastrado com sucesso"
-            Menu.start()
+            Menu.showMenu()
         }
     }
 
@@ -49,7 +49,7 @@ class NewUserView {
         User newEnterprise = FormsView.registrationForm("enterprise")
         if (enterpriseController.create(newEnterprise)) {
             println "Empresa cadastrada com sucesso"
-            Menu.start()
+            Menu.showMenu()
         }
     }
 

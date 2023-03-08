@@ -18,7 +18,33 @@ class CandidateView {
         JobController jobController = new JobController(new JobDAO())
         JobQualificationController jobQualificationController = new JobQualificationController(new JobQualificationDAO())
         Scanner input = new Scanner(System.in);
+        boolean quit = false
+        showCandidateMenu(user)
 
+        while (!quit) {
+            String command = input.nextLine();
+
+            switch (command) {
+                case "0":
+                    quit = true
+                    Menu.showMenu()
+                    break
+                case "1":
+                    opportunities(candidateController, user, jobController, jobQualificationController)
+                    break
+                case "2":
+                    matches(candidateController, user)
+                    break
+                case "3":
+                    CandidateQualificationsView.menu(user)
+                    break
+                default:
+                    break
+            }
+        }
+    }
+
+    static void showCandidateMenu(User user) {
         println ""
         println "Ola $user.name"
         println "1 - Ver oportunidades"
@@ -27,24 +53,6 @@ class CandidateView {
         println "0 - Sair"
         println ""
         println "Digite o codigo do comando"
-        String command = input.nextLine();
-
-        switch (command) {
-            case "0":
-                Menu.start()
-                break
-            case "1":
-                opportunities(candidateController, user, jobController, jobQualificationController)
-                break
-            case "2":
-                matches(candidateController, user)
-                break
-            case "3":
-                CandidateQualificationsView.menu(user)
-                break
-            default:
-                break
-        }
     }
 
     static void opportunities(CandidateController candidateController, User user, JobController jobController, JobQualificationController jobQualificationController) {
@@ -63,7 +71,7 @@ class CandidateView {
             }
         }
         println("Nao ha mais vagas cadastradas no momento")
-        menu(user)
+        showCandidateMenu(user)
     }
 
     static void matches(CandidateController candidateController, User user) {
@@ -74,7 +82,7 @@ class CandidateView {
             if (id == it.candidate_id)
                 println("Match com a empresa ${it.name} entrar em contato pelo email ${it.email}")
         }
-        menu(user)
+        showCandidateMenu(user)
     }
 
 }

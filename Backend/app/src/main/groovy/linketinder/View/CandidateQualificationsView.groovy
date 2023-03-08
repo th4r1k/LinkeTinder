@@ -2,7 +2,6 @@ package linketinder.View
 
 import linketinder.Controller.CandidateController
 import linketinder.Controller.CandidateQualificationController
-import linketinder.Controller.UserController
 import linketinder.Model.DAO.CandidateDAO
 import linketinder.Model.DAO.CandidateQualificationDAO
 import linketinder.Model.DAO.UserDAO
@@ -13,7 +12,32 @@ class CandidateQualificationsView {
     static menu(User user) {
         CandidateQualificationController candidateQualificationController = new CandidateQualificationController(new CandidateQualificationDAO())
         Scanner input = new Scanner(System.in)
+        boolean quit = false
 
+        showCandidateQualificationMenu(user)
+
+        while (!quit) {
+            String command = input.nextLine()
+
+            switch (command) {
+                case "0":
+                    quit = true
+                    CandidateView.showCandidateMenu(user)
+                    break
+                case "1":
+                    candidateQualificationController.getQualifications(user)
+                    goBack(user)
+                    break
+                case "2":
+                    changeQualificationMenu(user)
+                    break
+                default:
+                    break
+            }
+        }
+    }
+
+    static showCandidateQualificationMenu(User user) {
         println ""
         println "Ola $user.name"
         println "1 - Ver competencias"
@@ -21,25 +45,9 @@ class CandidateQualificationsView {
         println "0 - Sair"
         println ""
         println "Digite o codigo do comando"
-        String command = input.nextLine()
-
-        switch (command) {
-            case "0":
-                CandidateView.menu(user)
-                break
-            case "1":
-                candidateQualificationController.getQualifications(user)
-                goBack(user)
-                break
-            case "2":
-                changeQualificationMenu(user)
-                break
-            default:
-                break
-        }
     }
 
-    static changeQualificationMenu(User user){
+    static changeQualificationMenu(User user) {
         CandidateController candidateController = new CandidateController(new CandidateDAO(), new UserDAO())
         CandidateQualificationController candidateQualificationController = new CandidateQualificationController(new CandidateQualificationDAO())
 
@@ -54,7 +62,7 @@ class CandidateQualificationsView {
 
         switch (command) {
             case "0":
-                menu(user)
+                showCandidateQualificationMenu(user)
                 break
             case "1":
                 println("Descreva o novo valor para education")
@@ -82,7 +90,7 @@ class CandidateQualificationsView {
 
         switch (data) {
             case "1":
-                menu(candidate)
+                showCandidateQualificationMenu(candidate)
                 break
             default:
                 input.close()

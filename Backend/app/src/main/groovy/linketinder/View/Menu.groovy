@@ -14,7 +14,36 @@ class Menu {
         UserController userController = new UserController(new UserDAO(), new CandidateController(new CandidateDAO(), new UserDAO()))
         EnterpriseController enterpriseController = new EnterpriseController(new EnterpriseDAO(), new UserDAO())
         Scanner input = new Scanner(System.in)
+        boolean quit = false
 
+        showMenu()
+
+        while (!quit) {
+            String command = input.nextLine()
+
+            switch (command) {
+                case "0":
+                    quit = true
+                    break
+                case "1":
+                    NewUserView.menu()
+                    break
+                case "2":
+                    login(userController)
+                    break
+                case "3":
+                    printAllCandidates(userController)
+                    break
+                case "4":
+                    printAllEnterprises(enterpriseController)
+                    break
+                default:
+                    break
+            }
+        }
+    }
+
+    static showMenu() {
         println ""
         println "Bem vindo ao LinkeTinder"
         println "1 - Criar novo usuario"
@@ -24,26 +53,6 @@ class Menu {
         println "0 - Sair"
         println ""
         println "Digite o codigo do comando"
-        String command = input.nextLine()
-
-        switch (command) {
-            case "0":
-                break
-            case "1":
-                NewUserView.menu()
-                break
-            case "2":
-                login(userController)
-                break
-            case "3":
-                printAllCandidates(userController)
-                break
-            case "4":
-                printAllEnterprises(enterpriseController)
-                break
-            default:
-                break
-        }
     }
 
     static login(UserController userController) {
@@ -86,11 +95,11 @@ class Menu {
         String cmd = input.nextLine()
 
         if (cmd) {
-            start()
+            showMenu()
         }
     }
 
-    static printAllEnterprises(EnterpriseController enterpriseController){
+    static printAllEnterprises(EnterpriseController enterpriseController) {
         Scanner input = new Scanner(System.in)
         println ""
         println "Lista empresas:"
@@ -99,7 +108,7 @@ class Menu {
         String cmd = input.nextLine()
 
         if (cmd) {
-            start()
+            showMenu()
         }
     }
 

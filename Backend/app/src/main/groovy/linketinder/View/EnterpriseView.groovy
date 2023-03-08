@@ -13,7 +13,32 @@ class EnterpriseView {
         EnterpriseController enterpriseController = new EnterpriseController(new EnterpriseDAO(), new UserDAO())
         CandidateQualificationController candidateQualificationController = new CandidateQualificationController(new CandidateQualificationDAO())
         Scanner input = new Scanner(System.in)
+        boolean quit = false
+        showEnterpriseMenu(user)
 
+        while (!quit) {
+            String command = input.nextLine()
+            switch (command) {
+                case "0":
+                    quit = true
+                    Menu.showMenu()
+                    break
+                case "1":
+                    opportunities(enterpriseController, user, candidateQualificationController)
+                    break
+                case "2":
+                    matches(enterpriseController, user)
+                    break
+                case "3":
+                    JobView.showJobMenu()
+                    break
+                default:
+                    break
+            }
+        }
+    }
+
+    static showEnterpriseMenu(User user) {
         println ""
         println "Ola $user.name"
         println "1 - Ver candidatos"
@@ -22,23 +47,6 @@ class EnterpriseView {
         println "0 - Sair"
         println ""
         println "Digite o codigo do comando"
-        String command = input.nextLine()
-        switch (command) {
-            case "0":
-                Menu.start()
-                break
-            case "1":
-                opportunities(enterpriseController, user, candidateQualificationController)
-                break
-            case "2":
-                matches(enterpriseController, user)
-                break
-            case "3":
-                JobView.menu(user)
-                break
-            default:
-                break
-        }
     }
 
     static opportunities(EnterpriseController enterpriseController, User user, CandidateQualificationController candidateQualificationController) {
@@ -57,7 +65,7 @@ class EnterpriseView {
             }
         }
         println("Nao ha mais usuarios")
-        menu(user)
+        showEnterpriseMenu(user)
     }
 
     static matches(EnterpriseController enterpriseController, User user) {
@@ -68,6 +76,6 @@ class EnterpriseView {
             if (id == it.enterprise_id)
                 println("Match com o usuario ${it.name} entrar em contato pelo email ${it.email}")
         }
-        menu(user)
+        showEnterpriseMenu(user)
     }
 }
