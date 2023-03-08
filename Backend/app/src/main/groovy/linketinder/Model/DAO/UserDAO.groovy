@@ -1,8 +1,8 @@
-package linketinder.DAO
+package linketinder.Model.DAO
 
 import groovy.sql.GroovyRowResult
-import linketinder.DAO.Interfaces.UserDAOInterface
-import linketinder.Entity.User
+import linketinder.Model.DAO.Interfaces.UserDAOInterface
+import linketinder.Model.Entity.User
 import groovy.sql.Sql
 import linketinder.Utils.DbConnection.DbConnectionFactory
 import linketinder.Utils.DbConnection.IDbConnectionFactory

@@ -1,23 +1,24 @@
 package linketinder.View
 
-import linketinder.DAO.CandidateDAO
-import linketinder.DAO.QualificationDAO
-import linketinder.Entity.User
+import linketinder.Controller.CandidateQualificationController
+import linketinder.Model.DAO.CandidateDAO
+import linketinder.Model.DAO.CandidateQualificationDAO
+import linketinder.Model.Entity.CandidateQualification
+import linketinder.Model.Entity.User
 import linketinder.Utils.Regex
-import linketinder.Utils.Sanitize
 
 class FormsView {
 
     static User registrationForm(String category) {
         Scanner input = new Scanner(System.in)
 
-        String name = Sanitize.validateUser(input)
-        String password = Sanitize.validadePassword(input)
-        BigInteger doc = Sanitize.validadeDoc(input)
-        String email = Sanitize.validateEmail(input)
-        String country = Sanitize.validateCountry(input)
-        String state = Sanitize.validateState(input)
-        Integer zipCode = Sanitize.validateZipcode(input)
+        String name = InputsView.validateUser(input)
+        String password = InputsView.validadePassword(input)
+        BigInteger doc = InputsView.validadeDoc(input)
+        String email = InputsView.validateEmail(input)
+        String country = InputsView.validateCountry(input)
+        String state = InputsView.validateState(input)
+        Integer zipCode = InputsView.validateZipcode(input)
 
         if (category == "candidate") {
             User newCandidate = new User(name: name, email: email, country: country, zipCode: zipCode, state: state, doc: doc, password: password, category: "candidate")
@@ -75,36 +76,42 @@ class FormsView {
     }
 
     static void addCandidateInfo(User user){
+
         CandidateDAO dbCandidate = new CandidateDAO()
         Scanner input = new Scanner(System.in)
-        int age = Sanitize.validateAge(input)
+        int age = InputsView.validateAge(input)
         dbCandidate.editAge(user.id, age)
 
-        String description = Sanitize.validateDescription(input)
+        String description = InputsView.validateDescription(input)
+
         dbCandidate.editEducation(user.id, description)
     }
 
-    static void addCandidateSkill(User user, int id){
-        QualificationDAO dbQualification = new QualificationDAO()
+    static void addCandidateSkill(User user, int candidate_id){
+        CandidateQualificationController candidateQualificationController = new CandidateQualificationController(new CandidateQualificationDAO())
         Scanner input = new Scanner(System.in)
         String java = knowsJava(input)
         if(java ==~ Regex.optionYes){
-            dbQualification.addCandidateQualifications(id, 1)
+            CandidateQualification candidateQualification = new CandidateQualification(candidate_id: candidate_id, qualification_id: 1)
+            candidateQualificationController.addQualifications(candidateQualification)
         }
 
         String groovy = knowsGroovy(input)
         if(groovy ==~ Regex.optionYes){
-            dbQualification.addCandidateQualifications(id, 2)
+            CandidateQualification candidateQualification = new CandidateQualification(candidate_id: candidate_id, qualification_id: 2)
+            candidateQualificationController.addQualifications(candidateQualification)
         }
 
         String javascript = knowsJavascript(input)
         if(javascript ==~ Regex.optionYes){
-            dbQualification.addCandidateQualifications(id, 3)
+            CandidateQualification candidateQualification = new CandidateQualification(candidate_id: candidate_id, qualification_id: 3)
+            candidateQualificationController.addQualifications(candidateQualification)
         }
 
         String phyton = knowsPhyton(input)
         if(phyton ==~ Regex.optionYes){
-            dbQualification.addCandidateQualifications(id, 4)
+            CandidateQualification candidateQualification = new CandidateQualification(candidate_id: candidate_id, qualification_id: 4)
+            candidateQualificationController.addQualifications(candidateQualification)
         }
     }
 }

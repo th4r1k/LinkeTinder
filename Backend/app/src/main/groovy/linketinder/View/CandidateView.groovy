@@ -1,16 +1,23 @@
 package linketinder.View
 
 import linketinder.Controller.CandidateController
-import linketinder.DAO.CandidateDAO
-import linketinder.DAO.QualificationDAO
-import linketinder.DAO.UserDAO
-import linketinder.Entity.CandidateMatch
-import linketinder.Entity.Job
-import linketinder.Entity.User
+import linketinder.Controller.JobController
+import linketinder.Controller.JobQualificationController
+import linketinder.Model.DAO.CandidateDAO
+import linketinder.Model.DAO.JobDAO
+import linketinder.Model.DAO.JobQualificationDAO
+import linketinder.Model.DAO.UserDAO
+import linketinder.Model.Entity.CandidateMatch
+import linketinder.Model.Entity.Job
+import linketinder.Model.Entity.User
 
 class CandidateView {
 
     static menu(User user) {
+        CandidateController candidateController = new CandidateController(new CandidateDAO(), new UserDAO())
+        JobController jobController = new JobController(new JobDAO())
+        JobQualificationController jobQualificationController = new JobQualificationController(new JobQualificationDAO())
+        Scanner input = new Scanner(System.in);
 
         println ""
         println "Ola $user.name"
@@ -20,17 +27,14 @@ class CandidateView {
         println "0 - Sair"
         println ""
         println "Digite o codigo do comando"
-        Scanner input = new Scanner(System.in);
         String command = input.nextLine();
-        CandidateController candidateController = new CandidateController(new CandidateDAO(), new UserDAO())
-        QualificationDAO dbQualification = new QualificationDAO()
 
         switch (command) {
             case "0":
                 Menu.start()
                 break
             case "1":
-                opportunities(candidateController, user, dbQualification)
+                opportunities(candidateController, user, jobController, jobQualificationController)
                 break
             case "2":
                 matches(candidateController, user)
@@ -43,13 +47,13 @@ class CandidateView {
         }
     }
 
-    static void opportunities(CandidateController candidateController, User user, QualificationDAO dbQualification ){
+    static void opportunities(CandidateController candidateController, User user, JobController jobController, JobQualificationController jobQualificationController) {
         Scanner input = new Scanner(System.in)
 
-        int UserId = candidateController.candidateDAO.getId(user.id)
-        List<Job> jobs = candidateController.getOpportunities()
+        int UserId = candidateController.getId(user.id)
+        List<Job> jobs = jobController.listAllJobs()
         jobs.forEach {
-            dbQualification.jobQualifications(it)
+            jobQualificationController.getJobDescription(it as Job)
 
             println "0 - Like"
             println "1 - Proximo"
@@ -62,9 +66,9 @@ class CandidateView {
         menu(user)
     }
 
-    static void matches(CandidateController candidateController, User user){
+    static void matches(CandidateController candidateController, User user) {
         List<CandidateMatch> matches = candidateController.match()
-        int id = candidateController.candidateDAO.getId(user.id)
+        int id = candidateController.getId(user.id)
 
         matches.forEach {
             if (id == it.candidate_id)

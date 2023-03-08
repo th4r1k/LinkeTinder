@@ -1,10 +1,10 @@
 package linketinder.Controller
 
 import groovy.sql.GroovyRowResult
-import linketinder.DAO.CandidateDAO
-import linketinder.DAO.Interfaces.EnterpriseDAOInterface
-import linketinder.DAO.Interfaces.UserDAOInterface
-import linketinder.Entity.User
+import linketinder.Model.DAO.CandidateDAO
+import linketinder.Model.DAO.Interfaces.EnterpriseDAOInterface
+import linketinder.Model.DAO.Interfaces.UserDAOInterface
+import linketinder.Model.Entity.User
 
 class EnterpriseController {
 
@@ -33,5 +33,9 @@ class EnterpriseController {
     def match() {
         List<GroovyRowResult> matches = enterpriseDAO.match()
         return matches
+    }
+
+    int getId(int userId){
+        enterpriseDAO.getId(userId)
     }
 }

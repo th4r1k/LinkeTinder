@@ -1,10 +1,10 @@
-package linketinder.DAO
+package linketinder.Model.DAO
 
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
-import linketinder.DAO.Interfaces.CandidateDAOInterface
-import linketinder.Entity.CandidateMatch
-import linketinder.Entity.User
+import linketinder.Model.DAO.Interfaces.CandidateDAOInterface
+import linketinder.Model.Entity.CandidateMatch
+import linketinder.Model.Entity.User
 import linketinder.Utils.DbConnection.DbConnectionFactory
 import linketinder.Utils.DbConnection.IDbConnectionFactory
 
@@ -65,11 +65,10 @@ class CandidateDAO implements CandidateDAOInterface {
         return object.education
     }
 
-    def editEducation(int userId, String newEducation){
+    void editEducation(int userId, String newEducation){
         Sql sql = dbFactory.start()
-        List<List<Object>> education = sql.executeInsert("UPDATE candidates SET education=${newEducation} WHERE user_id=${userId}")
+        sql.executeInsert("UPDATE candidates SET education=${newEducation} WHERE user_id=${userId}")
         sql.close()
-        return education
     }
 
     def editAge(int userId, int newAge){

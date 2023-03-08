@@ -1,4 +1,4 @@
-package linketinder.DAO
+package linketinder.Model.Entity
 
 import groovy.transform.Canonical
 

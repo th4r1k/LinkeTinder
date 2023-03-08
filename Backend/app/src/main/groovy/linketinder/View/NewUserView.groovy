@@ -2,14 +2,17 @@ package linketinder.View
 
 import linketinder.Controller.CandidateController
 import linketinder.Controller.EnterpriseController
-import linketinder.DAO.CandidateDAO
-import linketinder.DAO.EnterpriseDAO
-import linketinder.DAO.UserDAO
-import linketinder.Entity.User
+import linketinder.Model.DAO.CandidateDAO
+import linketinder.Model.DAO.EnterpriseDAO
+import linketinder.Model.DAO.UserDAO
+import linketinder.Model.Entity.User
 
 class NewUserView {
 
     static void menu() {
+        CandidateController candidateController = new CandidateController(new CandidateDAO(), new UserDAO())
+        EnterpriseController enterpriseController = new EnterpriseController(new EnterpriseDAO(), new UserDAO())
+        Scanner input = new Scanner(System.in)
 
         println "Criar novo usuario"
         println "1 - Candidato"
@@ -17,10 +20,7 @@ class NewUserView {
         println "0 - Voltar ao menu anterior"
         println ""
         println "Digite o codigo do comando"
-        Scanner input = new Scanner(System.in)
         String command = input.nextLine()
-        CandidateController candidateController = new CandidateController(new CandidateDAO(), new UserDAO())
-        EnterpriseController enterpriseController = new EnterpriseController(new EnterpriseDAO(), new UserDAO())
 
         switch (command) {
             case "0":

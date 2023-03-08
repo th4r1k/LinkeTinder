@@ -1,48 +1,53 @@
 package linketinder.View
 
+import linketinder.Controller.CandidateQualificationController
 import linketinder.Controller.EnterpriseController
-import linketinder.DAO.EnterpriseDAO
-import linketinder.DAO.QualificationDAO
-import linketinder.DAO.UserDAO
-import linketinder.Entity.User
+import linketinder.Model.DAO.CandidateQualificationDAO
+import linketinder.Model.DAO.EnterpriseDAO
+import linketinder.Model.DAO.UserDAO
+import linketinder.Model.Entity.User
 
 class EnterpriseView {
 
     static menu(User user) {
+        EnterpriseController enterpriseController = new EnterpriseController(new EnterpriseDAO(), new UserDAO())
+        CandidateQualificationController candidateQualificationController = new CandidateQualificationController(new CandidateQualificationDAO())
+        Scanner input = new Scanner(System.in)
+
         println ""
         println "Ola $user.name"
         println "1 - Ver candidatos"
-        println "2 - ver matches"
+        println "2 - Ver matches"
+        println "3 - Jobs"
         println "0 - Sair"
         println ""
         println "Digite o codigo do comando"
-        Scanner input = new Scanner(System.in)
         String command = input.nextLine()
-        EnterpriseController enterpriseController = new EnterpriseController(new EnterpriseDAO(), new UserDAO())
-        QualificationDAO dbQualification = new QualificationDAO()
-
         switch (command) {
             case "0":
                 Menu.start()
                 break
             case "1":
-                opportunities(enterpriseController, user, dbQualification)
+                opportunities(enterpriseController, user, candidateQualificationController)
                 break
             case "2":
                 matches(enterpriseController, user)
+                break
+            case "3":
+                JobView.menu(user)
                 break
             default:
                 break
         }
     }
 
-    static opportunities(EnterpriseController enterpriseController, User user, QualificationDAO dbQualification) {
+    static opportunities(EnterpriseController enterpriseController, User user, CandidateQualificationController candidateQualificationController) {
         Scanner input = new Scanner(System.in)
 
-        int id = enterpriseController.enterpriseDAO.getId(user.id)
+        int id = enterpriseController.getId(user.id)
         List<User> candidates = enterpriseController.getOpportunities()
         candidates.forEach {
-            dbQualification.candidateQualifications(it)
+            candidateQualificationController.getQualifications(it)
             println "0 - Like"
             println "1 - Proximo"
             String cmd = input.nextLine()
@@ -56,7 +61,7 @@ class EnterpriseView {
     }
 
     static matches(EnterpriseController enterpriseController, User user) {
-        int id = enterpriseController.enterpriseDAO.getId(user.id)
+        int id = enterpriseController.getId(user.id)
         def matches = enterpriseController.match()
         matches.forEach {
 

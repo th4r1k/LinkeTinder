@@ -1,9 +1,9 @@
-package linketinder.DAO
+package linketinder.Model.DAO
 
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
-import linketinder.DAO.Interfaces.EnterpriseDAOInterface
-import linketinder.Entity.User
+import linketinder.Model.DAO.Interfaces.EnterpriseDAOInterface
+import linketinder.Model.Entity.User
 import linketinder.Utils.DbConnection.DbConnectionFactory
 import linketinder.Utils.DbConnection.IDbConnectionFactory
 
@@ -55,4 +55,6 @@ AND users.id IN (SELECT candidates.user_id FROM candidates WHERE candidates.id =
         return list
     }
 
+    static class JobQualificationDAO {
+    }
 }
