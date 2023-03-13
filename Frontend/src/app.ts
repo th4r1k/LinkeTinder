@@ -559,7 +559,7 @@ function validadeNewUserForm(): boolean {
 // Post Method **************************************************************
 
 function postMethod(data : Candidate|Enterprise){
-  fetch('https://linke-tinder.vercel.app/', {
+  fetch('https://linke-tinder.vercel.app', {
     // fetch('http://localhost:3000', {
     method: "POST",
     body: JSON.stringify(data),
