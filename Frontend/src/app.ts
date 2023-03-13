@@ -70,6 +70,7 @@ const addNewUser = function () {
         );
         Candidates.create(newCandidate);
         Candidates.save();
+        postMethod(newCandidate);
         createAccModal!.style.display = "none";
       } else if (enterpriseRadio.checked == true) {
         const newEnterprise = new Enterprise(
@@ -84,6 +85,7 @@ const addNewUser = function () {
         );
         Enterprises.create(newEnterprise);
         Enterprises.save();
+        postMethod(newEnterprise);
         createAccModal!.style.display = "none";
       }
     }
@@ -553,3 +555,17 @@ function validadeNewUserForm(): boolean {
   }
   return isOk;
 }
+
+// Post Method **************************************************************
+
+function postMethod(data : Candidate|Enterprise){
+  fetch('https://linke-tinder.vercel.app/', {
+    // fetch('http://localhost:3000', {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: {"Content-type": "application/json; charset=UTF-8"}
+  })
+  .then(response => response.json()) 
+  .catch(err => console.log(err));
+}
+
