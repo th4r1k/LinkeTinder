@@ -1,8 +1,11 @@
-const path = require("path");
-const copyPlugin = require("copy-webpack-plugin");
+import path from "path";
+import CopyPlugin from "copy-webpack-plugin";
+import url from 'url';
 
-module.exports = {
-  // mode: "none",
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+  export default{
   mode: "production",
   entry: [
     "./src/app.ts",
@@ -17,7 +20,7 @@ module.exports = {
     path: path.join(__dirname, "dist"),
   },
   plugins: [
-    new copyPlugin({
+    new CopyPlugin({
       patterns: [{ from: "public" }],
     }),
   ],
@@ -29,7 +32,6 @@ module.exports = {
       {
         test: /\.ts$/,
         use: "ts-loader",
-        exclude: /node_modules/,
       },
     ],
   },
