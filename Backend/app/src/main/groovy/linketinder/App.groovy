@@ -3,11 +3,57 @@
  */
 package linketinder
 
-import linketinder.View.Menu
+import jakarta.servlet.Servlet
+import linketinder.Controller.CandidateController
+import linketinder.Controller.CandidateQualificationController
+import linketinder.Controller.EnterpriseController
+import linketinder.Controller.JobController
+import linketinder.Controller.JobQualificationController
+import linketinder.Controller.UserController
+import linketinder.Model.DAO.CandidateDAO
+import linketinder.Model.DAO.CandidateQualificationDAO
+import linketinder.Model.DAO.EnterpriseDAO
+import linketinder.Model.DAO.JobDAO
+import linketinder.Model.DAO.JobQualificationDAO
+import linketinder.Model.DAO.UserDAO
+import org.apache.catalina.Context
+import org.apache.catalina.startup.Tomcat
 
 class App {
 
+
     static void main(String[] args) {
-        Menu.start()
+//        Menu.start()
+        Tomcat tomcat = new Tomcat()
+        tomcat.setPort(3333)
+        Context context = tomcat.addContext("", new File(".").getAbsolutePath());
+
+        Servlet userControllerServlet = new UserController(new UserDAO(), new CandidateController(new CandidateDAO(), new UserDAO()))
+        Tomcat.addServlet(context, "user", userControllerServlet)
+        context.addServletMappingDecoded("/user", "user");
+
+        Servlet candidateControllerServlet = new CandidateController(new CandidateDAO(), new UserDAO())
+        Tomcat.addServlet(context, "candidate", candidateControllerServlet)
+        context.addServletMappingDecoded("/candidate", "candidate");
+
+        Servlet enterpriseControllerServlet = new EnterpriseController(new EnterpriseDAO(), new UserDAO())
+        Tomcat.addServlet(context, "enterprise", enterpriseControllerServlet)
+        context.addServletMappingDecoded("/enterprise", "enterprise");
+
+        Servlet jobControllerServlet = new JobController(new JobDAO())
+        Tomcat.addServlet(context, "job", jobControllerServlet)
+        context.addServletMappingDecoded("/job", "job");
+
+        Servlet candidateQualificationControllerServlet = new CandidateQualificationController(new CandidateQualificationDAO())
+        Tomcat.addServlet(context, "cqualification", candidateQualificationControllerServlet)
+        context.addServletMappingDecoded("/cqualification", "cqualification");
+
+        Servlet jobQualificationControllerServlet = new JobQualificationController(new JobQualificationDAO())
+        Tomcat.addServlet(context, "jqualification", jobQualificationControllerServlet)
+        context.addServletMappingDecoded("/jqualification", "jqualification");
+
+        tomcat.getConnector()
+        tomcat.start();
+        tomcat.getServer().await();
     }
 }
