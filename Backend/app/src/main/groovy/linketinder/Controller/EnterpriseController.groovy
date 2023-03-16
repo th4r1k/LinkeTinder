@@ -1,12 +1,20 @@
 package linketinder.Controller
 
+import groovy.json.JsonSlurper
 import groovy.sql.GroovyRowResult
+import jakarta.servlet.annotation.WebServlet
+import jakarta.servlet.http.HttpServlet
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import linketinder.Model.DAO.CandidateDAO
 import linketinder.Model.DAO.Interfaces.EnterpriseDAOInterface
 import linketinder.Model.DAO.Interfaces.UserDAOInterface
 import linketinder.Model.Entity.User
 
-class EnterpriseController {
+import java.util.stream.Collectors
+
+@WebServlet(name = "enterprise", urlPatterns = "/enterprise")
+class EnterpriseController extends HttpServlet {
 
     EnterpriseDAOInterface enterpriseDAO
     UserDAOInterface userDAO
@@ -14,6 +22,24 @@ class EnterpriseController {
     EnterpriseController(EnterpriseDAOInterface enterpriseDAO, UserDAOInterface userDAO) {
         this.enterpriseDAO = enterpriseDAO
         this.userDAO = userDAO
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+        getAllEnterprises()
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+        String requestData = request.getReader().lines().collect(Collectors.joining());
+        def dataJson = new JsonSlurper().parseText(requestData)
+
+        User newUser = new User(name: dataJson.name, email: dataJson.email, country: dataJson.email, password: dataJson.password, category: dataJson.category, doc: new BigInteger(dataJson.doc), zipCode: Integer.parseInt(dataJson.zipCode), state: dataJson.state)
+        User userCreated = create(newUser)
+        response.SC_CREATED
+
+        if (!userCreated) {
+            response.SC_BAD_REQUEST
+            response.sendError(400)
+        }
     }
 
     User create(User newEnterprise) {
@@ -35,7 +61,7 @@ class EnterpriseController {
         return matches
     }
 
-    int getId(int userId){
+    int getId(int userId) {
         enterpriseDAO.getId(userId)
     }
 }
