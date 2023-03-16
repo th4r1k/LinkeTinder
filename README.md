@@ -1,5 +1,54 @@
 # LinkeTinder
 
+# 0.10.0
+
+### Backend
+Webserver for Backend using Tomcat-embed-core version: 10.1.7;
+jakarta HttpServlet handles standart HTTP request for Controllers.
+
+Before Gradle run:
+
+Configure Postgres
+
+    Backend/app/src/main/groovy/linketinder/Utils/DbConnection/PostgresConnectionFactory.groovy
+
+Configure Tomcat
+
+    Backend/app/src/main/groovy/linketinder/App.groovy
+
+REST API to create new candidates/enterprises
+Post containing body as json like.
+{
+	"name":"username",
+	"email":"email@email.com",
+	"country":"country",
+	"state":"state",
+	"password":"password",
+	"category":"candidate",
+	"doc":"12312312312",
+	"zipCode":"12312321"
+}
+
+Routes:
+/candidate
+/enterprise
+
+
+
+### Frontend 
+Webserver using Node.js
+work as a microservice, its possible to insert new users in Postgres Database
+
+Configure Node server
+
+    LinkeTinder/Frontend/src/server.ts
+
+Configure URL for POST method
+
+    LinkeTinder/Frontend/src/app.ts
+
+
+
 # Backend
 
 A simple Groovy program, with PostgreSql persistance.
