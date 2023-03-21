@@ -1,15 +1,13 @@
-package linketinder.View
+package linketinder.View.Terminal
 
-import linketinder.Controller.CandidateQualificationController
+
 import linketinder.Controller.EnterpriseController
 import linketinder.Controller.JobController
 import linketinder.Controller.JobQualificationController
-import linketinder.Model.DAO.CandidateQualificationDAO
 import linketinder.Model.DAO.EnterpriseDAO
 import linketinder.Model.DAO.JobDAO
 import linketinder.Model.DAO.JobQualificationDAO
 import linketinder.Model.DAO.UserDAO
-import linketinder.Model.Entity.CandidateQualification
 import linketinder.Model.Entity.Job
 import linketinder.Model.Entity.JobQualification
 import linketinder.Model.Entity.User

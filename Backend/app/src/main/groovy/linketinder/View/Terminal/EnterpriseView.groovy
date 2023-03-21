@@ -1,4 +1,4 @@
-package linketinder.View
+package linketinder.View.Terminal
 
 import linketinder.Controller.CandidateQualificationController
 import linketinder.Controller.EnterpriseController

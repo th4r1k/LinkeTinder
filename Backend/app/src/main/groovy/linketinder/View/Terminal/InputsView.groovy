@@ -1,4 +1,4 @@
-package linketinder.View
+package linketinder.View.Terminal
 
 import linketinder.Utils.Regex
 

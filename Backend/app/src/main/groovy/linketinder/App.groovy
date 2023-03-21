@@ -16,17 +16,29 @@ import linketinder.Model.DAO.EnterpriseDAO
 import linketinder.Model.DAO.JobDAO
 import linketinder.Model.DAO.JobQualificationDAO
 import linketinder.Model.DAO.UserDAO
+
 import org.apache.catalina.Context
+import org.apache.catalina.Wrapper
 import org.apache.catalina.startup.Tomcat
 
 class App {
 
 
     static void main(String[] args) {
-//        Menu.start()
         Tomcat tomcat = new Tomcat()
         tomcat.setPort(3333)
+
         Context context = tomcat.addContext("", new File(".").getAbsolutePath());
+
+        Wrapper defaultServlet = context.createWrapper();
+        defaultServlet = context.createWrapper();
+        defaultServlet.setName("view");
+        defaultServlet.setServletClass("org.apache.catalina.servlets.DefaultServlet");
+        defaultServlet.setLoadOnStartup(1);
+
+        context.addChild(defaultServlet);
+        context.addServletMappingDecoded("/", "view");
+        context.addWelcomeFile("src/main/groovy/linketinder/View/index.html")
 
         Servlet userControllerServlet = new UserController(new UserDAO(), new CandidateController(new CandidateDAO(), new UserDAO()))
         Tomcat.addServlet(context, "user", userControllerServlet)

@@ -1,4 +1,4 @@
-package linketinder.View
+package linketinder.View.Terminal
 
 import linketinder.Controller.CandidateController
 import linketinder.Controller.JobController
